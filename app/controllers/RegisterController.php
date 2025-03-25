@@ -1,6 +1,6 @@
 <?php
 
-class HomeController
+class RegisterController
 {
     private $db;
 
@@ -13,6 +13,6 @@ class HomeController
 
     public function render()
     {
-        require_once __DIR__ . '/../views/login.php';
+        require_once __DIR__ . '/../views/register.php';
     }
 }

@@ -1,138 +1,103 @@
 <?php
 
-
 require_once __DIR__ . '/Database.php';
-
 
 class Router
 {
-    private $segments;
-    private $queryParams;
+    private $segmentosURL;
+    private $parametrosConsulta;
     private $url;
 
-    public function __construct($url)
+    public function __construct($_url)
     {
-        $this->url = $url;
-        $parts = explode('?', $url);
-        $path = $parts[0];
-        $queryString = isset($parts[1]) ? $parts[1] : '';
+        $parsedUrl = parse_url($_url); // Obtiene solo la ruta y consulta
+        $ruta = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+        $cadenaConsulta = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 
-        $this->segments = array_filter(explode('/', $path));
-        $this->queryParams = $this->parseQueryParams($queryString);
+        $this->segmentosURL = explode('/', ucfirst(trim($ruta, '/')));
+        $this->parametrosConsulta = $this->analizarParametrosConsulta($cadenaConsulta);
     }
 
     // Método principal para manejar el enrutamiento
-    public function dispatch()
+    public function enrutar()
     {
-        $routeInfo = $this->getRouteInfo();
+        $infoRuta = $this->obtenerInfoRuta();
 
-        // Manejar la ruta raíz
-        if ($this->url === "/" || $this->url === "") {
-            return $this->handleHomeRoute();
+        $nombreControlador = ucfirst($infoRuta['controlador']) . 'Controller';
+        $archivoControlador = __DIR__ . "/../controllers/{$nombreControlador}.php";
+
+        if (file_exists($archivoControlador)) {
+            return $this->manejarControlador($archivoControlador, $nombreControlador, $infoRuta);
         }
 
-        // Manejar otras rutas
-        $controllerName = ucfirst($routeInfo['controller']) . 'Controller';
-        $controllerFile = __DIR__ . "/../controllers/{$controllerName}.php";
-
-        if (file_exists($controllerFile)) {
-            return $this->handleController($controllerFile, $controllerName, $routeInfo);
-        }
-
-        return $this->handleNotFound("Controller not found!");
+        return $this->manejarError("¡Controlador no encontrado!");
     }
 
-    private function handleHomeRoute()
+    private function manejarControlador($archivoControlador, $nombreControlador, $infoRuta)
     {
-        $controllerFile = __DIR__ . "/../controllers/HomeController.php";
-        if (!file_exists($controllerFile)) {
-            return $this->handleNotFound("Home Controller not found!");
-        }
+        require_once $archivoControlador;
+        $controlador = new $nombreControlador();
+        $accion = $infoRuta['accion'];
 
-        require_once $controllerFile;
-        $controller = new HomeController();
-        return $controller->render();
-    }
-
-    private function handleController($controllerFile, $controllerName, $routeInfo)
-    {
-        require_once $controllerFile;
-        $controller = new $controllerName();
-        $action = $routeInfo['action'];
-
-        if (method_exists($controller, $action)) {
+        if (method_exists($controlador, $accion)) {
             return call_user_func_array(
-                [$controller, $action],
-                $routeInfo['params']
+                [$controlador, $accion],
+                $infoRuta['parametros']
             );
         }
 
-        return $this->handleNotFound("Action not found!");
+        return $this->manejarError("¡Acción no encontrada error en manejo!");
     }
 
-    private function handleNotFound($message)
+    private function manejarError($mensaje)
     {
         header("HTTP/1.0 404 Not Found");
-        echo $message;
+        echo $mensaje;
         return false;
     }
 
-    // Método para obtener el controlador
-    public function getController()
+    // Método auxiliar para analizar la cadena de consulta
+    private function analizarParametrosConsulta($cadenaConsulta)
     {
-        return isset($this->segments[0]) ? $this->segments[0] : 'defaultController';
+        $parametrosConsulta = array();
+        if ($cadenaConsulta) {
+            $pares = explode('&', $cadenaConsulta);
+            foreach ($pares as $par) {
+                $partes = explode('=', $par);
+                $clave = $partes[0];
+                $valor = isset($partes[1]) ? $partes[1] : null;
+                $parametrosConsulta[$clave] = $valor;
+            }
+        }
+        return $parametrosConsulta;
     }
 
-    // Método para obtener la acción  
-    public function getAction()
+    // Método para obtener toda la información de la ruta
+    public function obtenerInfoRuta()
     {
-        return isset($this->segments[1]) ? $this->segments[1] : 'defaultAction';
+        return array(
+            'controlador' => $this->obtenerControlador(),
+            'accion' => $this->obtenerAccion(),
+            'parametros' => $this->obtenerParametros(),
+            'parametrosConsulta' => $this->parametrosConsulta
+        );
+    }
+
+    // Método para obtener la acción
+    public function obtenerAccion()
+    {
+        return isset($this->segmentosURL[1]) ? $this->segmentosURL[1] : 'render';
     }
 
     // Método para obtener los parámetros
-    public function getParams()
+    public function obtenerParametros()
     {
-        return array_slice($this->segments, 2);
+        return array_slice($this->segmentosURL, 2);
     }
 
-    // Método auxiliar para analizar la query string
-    private function parseQueryParams($queryString)
+    // Método para obtener el controlador
+    public function obtenerControlador()
     {
-        $queryParams = array();
-        if ($queryString) {
-            $pairs = explode('&', $queryString);
-            foreach ($pairs as $pair) {
-                $parts = explode('=', $pair);
-                $key = $parts[0];
-                $value = isset($parts[1]) ? $parts[1] : null;
-                $queryParams[$key] = $value;
-            }
-        }
-        return $queryParams;
-    }
-
-    // Método para obtener toda la información junta
-    public function getRouteInfo()
-    {
-        return array(
-            'controller' => $this->getController(),
-            'action' => $this->getAction(),
-            'params' => $this->getParams(),
-            'queryParams' => $this->queryParams
-        );
+        return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'home';
     }
 }
-/*
-// Ejemplo de uso
-$url = '/products/details/42?category=books&sort=desc';
-$router = new Router($url);
-
-print_r($router->getRouteInfo());
-// Salida:
-// Array(
-//   'controller' => 'products',
-//   'action' => 'details', 
-//   'params' => Array('42'),
-//   'queryParams' => Array('category' => 'books', 'sort' => 'desc')
-// )
-*/
