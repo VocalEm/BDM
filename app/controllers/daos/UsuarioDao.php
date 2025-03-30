@@ -169,10 +169,14 @@ class UsuarioDao
             $stmt->bindParam(':password', $password, \PDO::PARAM_STR);
 
             $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($resultado["ID_USUARIO"] == null) {
+                return true; // Usuario no encontrado o contraseña incorrecta
+            }
             return $stmt->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo "Error al iniciar sesión: " . $e->getMessage();
-            return null;
+            return false;
         }
     }
 }

@@ -21,4 +21,23 @@ class LoginController
     {
         require_once __DIR__ . '/../views/login.php';
     }
+
+    public function login()
+    {
+        session_start();
+        $correo = $_POST['correo'];
+        $password = $_POST['password'];
+
+        $usuarioDao = new UsuarioDao();
+        $usuario = $usuarioDao->login($correo, $password);
+
+        if ($usuario && password_verify($password, $usuario->getPassword())) {
+            $_SESSION['user'] = $usuario; //fa;ta corregir esto y trabajar en un middleware 
+            header("Location: /home"); // Redirigir a la página de inicio
+            exit;
+        } else {
+            $error = "Nombre de usuario o contraseña incorrectos.";
+            require_once __DIR__ . '/../views/login.php';
+        }
+    }
 }
