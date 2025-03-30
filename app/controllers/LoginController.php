@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Controllers;
+
+use App\Core\Database;
+use App\Controllers\Daos\UsuarioDao;
+use App\Models\Usuarios;
+
 class LoginController
 {
     private $db;

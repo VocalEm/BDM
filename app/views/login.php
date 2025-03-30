@@ -8,7 +8,7 @@ require_once __DIR__ . '/plantillas/head.php';
             <h1 class="motion_reg">MOTION</h1>
         </div>
 
-        <div class="contenido_form_reg">
+        <form class="contenido_form_reg" action="/login/form" method="POST">
             <p class="main_text_reg">Inicio de Sesión</p>
             <div class="forms_label_reg">
                 <label class="label_reg">Nombre de usuario:</label>
@@ -21,7 +21,7 @@ require_once __DIR__ . '/plantillas/head.php';
                 <a href="/register" class="tengo_cuenta">No tengo cuenta.</a>
             </div>
 
-        </div>
+        </form>
 
     </div>
 

@@ -1,4 +1,9 @@
 <?php
+
+use App\Core\Router;
+
+
+
 // Incluir el archivo del Router
 require_once __DIR__ . '/app/core/Router.php';
 

@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Core;
+
+
 require_once __DIR__ . '/Database.php';
 
 class Router
@@ -24,7 +27,9 @@ class Router
         $infoRuta = $this->obtenerInfoRuta();
 
         $nombreControlador = ucfirst($infoRuta['controlador']) . 'Controller';
-        $archivoControlador = __DIR__ . "/../controllers/{$nombreControlador}.php";
+        $archivoControlador = __DIR__ . "/../controllers/" . $nombreControlador . ".php"; // Corregido
+
+
 
         if (file_exists($archivoControlador)) {
             return $this->manejarControlador($archivoControlador, $nombreControlador, $infoRuta);
@@ -36,7 +41,12 @@ class Router
     private function manejarControlador($archivoControlador, $nombreControlador, $infoRuta)
     {
         require_once $archivoControlador;
-        $controlador = new $nombreControlador();
+
+        // Agregar el namespace al nombre del controlador
+        $nombreControladorConNamespace = "App\\Controllers\\" . $nombreControlador;
+
+        // Instanciar el controlador
+        $controlador = new $nombreControladorConNamespace();
         $accion = $infoRuta['accion'];
 
         if (method_exists($controlador, $accion)) {
@@ -46,7 +56,7 @@ class Router
             );
         }
 
-        return $this->manejarError("¡Acción no encontrada error en manejo!");
+        return $this->manejarError("¡Acción no encontrada!");
     }
 
     private function manejarError($mensaje)
