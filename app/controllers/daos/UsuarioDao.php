@@ -52,7 +52,12 @@ class UsuarioDao
             // Capturar el resultado del SELECT TRUE AS correcto
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            return ($resultado['correcto'] == true) ? true : false;
+            if ($resultado['correo'] == true) {
+                return "correo";
+            } // Correo ya existe
+            else if ($resultado['output'] == true) {
+                return "correcto"; // Operación exitosa
+            }
         } catch (\PDOException $e) {
             echo "Error al agregar usuario: " . $e->getMessage();
             return false;

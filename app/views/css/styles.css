@@ -281,9 +281,11 @@ body {
 .contenido_form_reg {
   display: flex;
   justify-content: center; /* Centrado horizontal */
+  align-items: center;
   flex-direction: column;
   margin-left: 400px;
   margin-right: 400px;
+  max-width: 50%;
 }
 
 .main_text_reg {
@@ -313,12 +315,16 @@ body {
   background-color: black;
   border-color: var(--color-4);
   border-radius: 10px;
-  width: 500px;
+  min-width: 800px;
   padding: 5px;
   font-family: var(--font--2);
   color: var(--color-6);
   font-size: 15px;
   margin-bottom: 10px;
+}
+
+.inputs_reg.error {
+  border-color: red;
 }
 
 .input_sexo {
@@ -365,6 +371,23 @@ body {
   text-decoration: underline;
   color: var(--color-3); /* Color azul como un hipervínculo */
   cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+/* Estilos para mensajes de error */
+.error-messages {
+  color: red;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: #ffe6e6;
+  display: none; /* Oculto por defecto */
+  max-width: 500px; /* Limitar ancho */
+  text-align: center;
+  margin-left: auto; /* Centrar horizontalmente */
+  margin-right: auto; /* Centrar horizontalmente */
 }
 
 /*-------------------------------------------CSS de la pagina de Usuario------------------------------------*/

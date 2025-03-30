@@ -46,14 +46,22 @@ class RegisterController
 
             $usuarioDao = new UsuarioDao();
             $respuesta = $usuarioDao->agregarUsuario($usuario);
-            if ($respuesta) {
-                // Redirigir a la página de inicio o mostrar un mensaje de éxito
-                header('Location: /login'); // Cambia esto a la ruta deseada
-                exit;
-            } else {
+            switch ($respuesta) {
+                case "correcto":
+                    // Redirigir a la página de inicio o mostrar un mensaje de éxito
+                    header("Location: /login");
+                    exit;
+                case "correo":
+                    // Correo ya existe, redirigir a la página de registro con un mensaje de error
+                    $error = "El correo electrónico ya está registrado.";
+                    require_once __DIR__ . '/../views/register.php';
+                    break;
+                default:
+                    // Manejar otros errores (si los hay)
+                    $error = "Ocurrió un error al registrar el usuario.";
+                    require_once __DIR__ . '/../views/register.php';
+                    break;
             }
-
-            echo "Usuario registrado exitosamente.";
         }
     }
 }
