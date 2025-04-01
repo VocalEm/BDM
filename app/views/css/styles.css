@@ -288,6 +288,10 @@ body {
   max-width: 50%;
 }
 
+.contenido_form_reg span {
+  color: white;
+}
+
 .main_text_reg {
   font-family: var(--font--2);
   font-weight: bold;

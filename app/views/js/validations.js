@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!validarPassword(password.value)) {
       mostrarError(
         password,
-        "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial."
+        "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial (como @, $, !, %, *, ?, &, o .)."
       );
       hasErrors = true;
     }
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Validar contraseña
   function validarPassword(password) {
     const regexPassword =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/;
     return regexPassword.test(password);
   }
 });

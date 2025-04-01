@@ -5,6 +5,8 @@ namespace App\Controllers\Daos;
 use App\Core\Database;
 use App\Models\Usuarios;
 
+
+
 class UsuarioDao
 {
     private $conexion;
@@ -170,9 +172,8 @@ class UsuarioDao
 
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($resultado["ID_USUARIO"] == null) {
-                return true; // Usuario no encontrado o contraseña incorrecta
-            }
+            if ($resultado["ID_USUARIO"] == null)
+                return false;
             return $stmt->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo "Error al iniciar sesión: " . $e->getMessage();

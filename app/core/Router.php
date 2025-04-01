@@ -4,12 +4,13 @@ namespace App\Core;
 
 
 require_once __DIR__ . '/Database.php';
+require_once __DIR__ . '/Middleware.php';
 
 class Router
 {
     private $segmentosURL;
     private $parametrosConsulta;
-    static private $title;
+
 
     public function __construct($_url)
     {
@@ -26,7 +27,6 @@ class Router
     {
         $infoRuta = $this->obtenerInfoRuta();
 
-        $this->title = ucfirst($infoRuta['controlador']);
         $nombreControlador = ucfirst($infoRuta['controlador']) . 'Controller';
         $archivoControlador = __DIR__ . "/../controllers/" . $nombreControlador . ".php"; // Corregido
 
@@ -110,10 +110,5 @@ class Router
     public function obtenerControlador()
     {
         return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'home';
-    }
-
-    static public function getTitle()
-    {
-        return self::$title;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 class Usuarios
 {
     private $idUsuario;

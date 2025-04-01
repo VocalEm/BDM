@@ -12,7 +12,6 @@ require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
 class RegisterController
 {
 
-
     public function __construct() {}
 
     public function index() {}
