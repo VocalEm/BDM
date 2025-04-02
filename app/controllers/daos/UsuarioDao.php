@@ -160,21 +160,22 @@ class UsuarioDao
     }
 
     // Login de usuario
-    public function login($correo, $password)
+    public function login($correo)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, :password, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 6; // Opción 6: Login
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
             $stmt->bindParam(':correo', $correo, \PDO::PARAM_STR);
-            $stmt->bindParam(':password', $password, \PDO::PARAM_STR);
 
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($resultado["ID_USUARIO"] == null)
+            if (!$resultado) {
                 return false;
-            return $stmt->fetch(\PDO::FETCH_ASSOC);
+            } else {
+                return $resultado; // Retorna el usuario encontrado
+            }
         } catch (\PDOException $e) {
             echo "Error al iniciar sesión: " . $e->getMessage();
             return false;

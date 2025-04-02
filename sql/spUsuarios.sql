@@ -16,14 +16,31 @@ BEGIN
     CASE p_opcion
         -- Opción 1: Registrar un usuario
         WHEN 1 THEN
-            INSERT INTO usuarios (
-                NOMBRE, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_NACIMINENTO,
-                SEXO, USERNAME, `PASSWORD`, FOTO_PERFIL, ESTATUS, PRIVACIDAD, FECHA_REGISTRO
-            ) VALUES (
-                p_NOMBRE, p_APELLIDO_PATERNO, p_APELLIDO_MATERNO, p_CORREO, p_FECHA_NACIMIENTO,
-                p_SEXO, p_USERNAME, p_PASSWORD, p_FOTO_PERFIL, 1, p_PRIVACIDAD, NOW()
-            );
-            SELECT TRUE AS correcto;
+            -- Validar si el correo ya existe
+            IF EXISTS (
+                SELECT 1 FROM usuarios WHERE CORREO = p_CORREO
+            ) THEN
+                SELECT TRUE AS correo;
+            
+            -- Validar si el nombre de usuario ya existe
+            ELSEIF EXISTS (
+                SELECT 1 FROM usuarios WHERE USERNAME = p_USERNAME
+            ) THEN
+                SELECT TRUE AS username;
+
+            ELSE
+                -- Registrar usuario si no hay conflictos
+                INSERT INTO usuarios (
+                    NOMBRE, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_NACIMINENTO,
+                    SEXO, USERNAME, `PASSWORD`, FOTO_PERFIL, ESTATUS, PRIVACIDAD, FECHA_REGISTRO
+                ) VALUES (
+                    p_NOMBRE, p_APELLIDO_PATERNO, p_APELLIDO_MATERNO, p_CORREO, p_FECHA_NACIMIENTO,
+                    p_SEXO, p_USERNAME, p_PASSWORD, p_FOTO_PERFIL, 1, p_PRIVACIDAD, NOW()
+                );
+                SELECT TRUE AS output;
+            END IF;
+
+
 
         -- Opción 2: Desactivar un usuario
         WHEN 2 THEN
@@ -94,10 +111,11 @@ BEGIN
                 APELLIDO_PATERNO,
                 APELLIDO_MATERNO,
                 CORREO,
+                `PASSWORD`,
                 USERNAME,
                 ESTATUS
             FROM usuarios
-            WHERE CORREO = p_CORREO AND `PASSWORD` = p_PASSWORD AND ESTATUS = 1;
+            WHERE CORREO = p_CORREO  AND ESTATUS = 1;
 
         -- Manejo de error: Opción no válida
         ELSE

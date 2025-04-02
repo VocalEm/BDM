@@ -13,6 +13,10 @@
   --font--2: "Afacad", sans-serif;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -37,7 +41,7 @@ body {
 .motion {
   /*Logo de Motion*/
   font-family: var(--font--1);
-  font-size: 3rem;
+  font-size: 6rem;
   color: var(--color-1);
   -webkit-text-stroke: 0.5px var(--color-4); /* Ancho y color del borde */
   padding-left: 20px;
@@ -65,7 +69,7 @@ body {
 
 .main_headers {
   padding: 10px;
-  font-size: 18px;
+  font-size: 2.8rem;
 }
 
 #input_serach_mp {
@@ -75,7 +79,7 @@ body {
   padding: 8px;
   width: 430px;
   font-family: var(--font--2);
-  font-size: 16px;
+  font-size: 1.6rem;
   color: var(--color-6);
 }
 
@@ -85,6 +89,7 @@ body {
 
 .main_body_index {
   display: flex;
+  justify-content: center;
 }
 
 .main_body_barralateral {
@@ -137,6 +142,12 @@ body {
   align-content: center;
 }
 
+.main_body_publi_cat a {
+  text-decoration: none;
+  color: var(--color-5);
+  font-size: 2rem;
+}
+
 #OpenDash {
   /*Iconos de la barra lateral*/
   width: 50%;
@@ -152,6 +163,7 @@ body {
 .main_body_public_fotos {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .main_body_public_fotos1 {
@@ -295,7 +307,7 @@ body {
 .main_text_reg {
   font-family: var(--font--2);
   font-weight: bold;
-  font-size: 25px;
+  font-size: 2.5rem;
   color: var(--color-3);
 }
 
@@ -312,7 +324,7 @@ body {
   margin: 3px;
   margin-left: 0px;
   margin-top: 5px;
-  font-size: 14px;
+  font-size: 1.4rem;
 }
 
 .inputs_reg {
@@ -323,7 +335,7 @@ body {
   padding: 5px;
   font-family: var(--font--2);
   color: var(--color-6);
-  font-size: 15px;
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
@@ -354,7 +366,7 @@ body {
   font-family: var(--font--2);
   padding: 10px;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 2rem;
   border: none;
   width: 200px;
 }
@@ -366,7 +378,7 @@ body {
 .tengo_cuenta {
   color: var(--color-6);
   font-family: var(--font--2);
-  font-size: 20px;
+  font-size: 2rem;
   margin-top: 15px;
   text-decoration: underline;
 }
@@ -381,7 +393,7 @@ body {
 .error-messages {
   color: red;
   font-family: Arial, sans-serif;
-  font-size: 14px;
+  font-size: 1.4rem;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid red;
@@ -426,7 +438,7 @@ body {
 
 #btn_editperfil {
   width: 100px;
-  font-size: 15px;
+  font-size: 1.5rem;
 }
 
 .datos_Usu {
@@ -439,7 +451,7 @@ body {
 
 #Username {
   margin-bottom: 12px;
-  font-size: 50px;
+  font-size: 5rem;
 }
 
 .numeros_usu {
@@ -461,7 +473,7 @@ body {
   border-radius: 10px;
   border: none;
   margin-top: 20px;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: bolder;
   align-items: center;
   width: 70px;
@@ -515,7 +527,7 @@ body {
 }
 .titulo_tablero {
   color: var(--color-6);
-  font-size: 50px;
+  font-size: 5rem;
   font-weight: lighter;
   font-family: var(--font--1);
 }
@@ -528,7 +540,7 @@ body {
 .titulo-publicacion {
   font-family: var(--font--2); /* Usa la misma fuente que en tu diseño */
   color: var(--color-6); /* Color del texto */
-  font-size: 14px; /* Tamaño del texto */
+  font-size: 1.4rem; /* Tamaño del texto */
   text-align: center; /* Centra el texto */
   margin-top: 8px; /* Espacio entre la imagen y el título */
   padding: 0 5px; /* Padding opcional para evitar que el texto toque los bordes */
@@ -584,7 +596,7 @@ body {
 .comentario_post {
   color: var(--color-6);
   font-family: var(--font--2);
-  font-size: 20px;
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
@@ -596,7 +608,7 @@ body {
   width: 370px;
   color: black;
   font-family: var(--font--2);
-  font-size: 20px;
+  font-size: 2rem;
 }
 
 .actions_post {
@@ -726,4 +738,28 @@ body {
   overflow-y: auto; /* Habilita la barra de desplazamiento vertical */
   border: 1px solid #ccc; /* Borde para visualizar el contenedor */
   padding: 10px; /* Espaciado interno */
+}
+
+.main_header_search {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  width: 50rem;
+  height: 5px;
+}
+
+.main_header_search img {
+  display: flex;
+  justify-content: center;
+}
+
+.input_search_mp {
+  background-color: black;
+  border-color: var(--color-4);
+  border-radius: 10px;
+  padding: 8px;
+  width: 430px;
+  font-family: var(--font--2);
+  font-size: 1.6rem;
+  color: var(--color-6);
 }
