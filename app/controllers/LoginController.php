@@ -30,9 +30,9 @@ class LoginController
         $password = $_POST['password'];
 
         $usuarioDao = new UsuarioDao();
-        $usuario = $usuarioDao->login($correo);
+        $usuario = $usuarioDao->login($correo, $password);
         echo $password;
-        echo $usuario['CORREO'];
+        echo $usuario['PASSWORD'];
         if ($usuario && password_verify($password, $usuario['PASSWORD'])) {
             if ($this->middleware->login($_POST['recordarSesion'], $usuario['ID_USUARIO'])) {
                 header('Location: /home'); // Redirigir a la página de inicio

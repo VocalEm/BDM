@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/plantillas/head.php';
+require_once __DIR__ . '/plantillas/header.php';
 ?>
 
 <body>
@@ -12,10 +13,7 @@ require_once __DIR__ . '/plantillas/head.php';
                 <!--<input type="text" id="input_search_mp" placeholder="Buscar" class="input_search_mp" />
                 <img src="/app/views/assets/Search.png" alt="">-->
             </form>
-            <nav class="main_header_ri">
-                <a class="main_headers" href="/html/register.html">Registrarse</a>
-                <a class="main_headers" href="/html/login.html">Iniciar Sesión</a>
-            </nav>
+
         </div>
     </header>
     <aside class="main_body_barralateral">
