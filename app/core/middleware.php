@@ -23,6 +23,24 @@ class Middleware
     function autenticarUsuario()
     {
         session_start();
+        // Verificar si la sesión es válida
+        if (isset($_SESSION['id_user'])) {
+            return true; // Usuario autenticado con sesión
+        }
+        // Verificar si la cookie es válida
+        if (isset($_COOKIE['id_user'])) {
+            // Iniciar sesión con la cookie
+            $_SESSION['id_user'] = $_COOKIE['id_user'];
+            return true; // Usuario autenticado con cookie
+        }
+
+        // Si no tiene sesión ni cookie, no está autenticado
+        $this->redirigir('/login');
+    }
+
+    function autenticarSesion()
+    {
+        session_start();
         if (isset($_SESSION['id_user'])) {
             return true; // Usuario autenticado
         } else {
@@ -78,5 +96,13 @@ class Middleware
     {
         header("Location: $ruta");
         exit;
+    }
+
+    function obtenerIdEnSesion($id)
+    {
+        if ($id == $_SESSION['id_user']) {
+            return true;
+        }
+        return false;
     }
 }

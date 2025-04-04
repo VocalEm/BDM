@@ -5,41 +5,28 @@ require_once __DIR__ . '/plantillas/header.php';
 
 <body>
 
-    <div class="main_body_barralateral">
-        <div class="main_body_barralateral_iconos">
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/Home.png" class="header_icono" alt="Home Icon" />
-            </a>
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/Search.png" class="header_icono" alt="Search Icon" />
-            </a>
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/usuarios-alt (3) 1.png" class="header_icono" alt="Users Icon" />
-            </a>
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/favorite.png" class="header_icono" alt="Favorite Icon" />
-            </a>
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/Plus square.png" class="header_icono" alt="Add Icon" />
-            </a>
-            <a class="icono_bl" href="#">
-                <img id="OpenDash" src="/app/views/assets/Mask group.png" class="header_icono" alt="Mask Icon" />
-            </a>
-            <a href="#">
-                <img id="OpenDash" src="/app/views/assets/More vertical.png" class="header_icono" alt="More Icon" />
-            </a>
-        </div>
-    </div>
+    <?php
+    require_once __DIR__ . '/plantillas/menu_lateral.php';
+    ?>
     <main class="main_body_index">
         <div class="main_body_pageUsu" style="margin-left: 130px;">
             <div class="pageUsu_datosUsu">
                 <div class="foto_edit_Usu">
                     <img id="foto_perfil" src="/app/views/assets/selfie sin dedo de dami.png" alt="Foto de perfil">
-                    <a href="/html/editar.html">Editar perfil</a>
+                    <?php
+                    if ($usuarioEnSesion) {
+                    ?>
+                        <a class="btn_accion" href="/html/editar.html">Editar perfil</a>
+                    <?php
+                    }
+                    ?>
+
                 </div>
                 <div class="datos_Usu">
                     <div class="nombre_usu">
-                        <h1 id="Username" name="Username">NombreUsuario</h1>
+                        <h1 id="Username" name="Username"><?php
+                                                            echo $usuario->getNombre();
+                                                            ?></h1>
                         <img src="/app/views/assets/Eye off.png" style="width: 25px; height: 25px; margin: 10px;" alt="Eye Icon">
                     </div>
 

@@ -16,7 +16,7 @@ require_once __DIR__ . '/plantillas/head.php';
                 <input type="text" id="input_name_is" class="inputs_reg" name="correo" required>
                 <label class="label_reg">Contraseña:</label>
                 <input type="password" id="input_pass_is" class="inputs_reg" name="password" required>
-                <div><input type="checkbox" id="recordarSesion" name="recordarSesion" value="1">
+                <div><input class="checkbox" type="checkbox" id="recordarSesion" name="recordarSesion" value="1">
                     <span for="">Recordar sesion</span>
                 </div>
                 <?php
@@ -31,7 +31,7 @@ require_once __DIR__ . '/plantillas/head.php';
 
             </div>
             <div class="btn_label_reg">
-                <input type="submit" class="btn_sesion" id="btn_iniciar" value="Iniciar Sesión">
+                <input type="submit" class="btn_accion" id="btn_iniciar" value="Iniciar Sesión">
                 <a href="/register" class="tengo_cuenta">No tengo cuenta.</a>
             </div>
 

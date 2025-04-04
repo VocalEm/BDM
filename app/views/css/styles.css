@@ -40,6 +40,7 @@ a {
 
 .main_header_nameapp {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .motion {
@@ -127,10 +128,12 @@ a {
   padding-right: 20px;
   justify-content: space-between;
   margin-right: 15px;
+  transition: transform 0.5s ease, background-color 0.5s ease;
 }
 
 .icono_cat:hover {
   background-color: var(--color-3);
+  transform: scale(1.1);
 }
 
 .main_body_public {
@@ -157,11 +160,11 @@ a {
   width: 50%;
   align-items: center;
   padding: 5px;
+  transition: transform 0.5s ease;
 }
 
 #OpenDash:hover {
-  width: max-content;
-  width: 65%;
+  transform: scale(1.5);
 }
 
 .main_body_public_fotos {
@@ -276,8 +279,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
-  margin-bottom: 20px;
+  margin: 0rem 1rem;
 }
 
 .contenedor_motion_reg {
@@ -322,13 +324,23 @@ a {
   justify-content: center;
 }
 
+.forms_label_reg span {
+  font-size: 2rem;
+  font-family: var(--font--2);
+  margin-left: 1rem;
+}
+.forms_label_reg .checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .label_reg {
   color: var(--color-6);
   font-family: var(--font--2);
   margin: 3px;
   margin-left: 0px;
   margin-top: 5px;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .inputs_reg {
@@ -361,11 +373,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
-}
-
-.btn_sesion:hover {
-  background-color: var(--color-3);
+  margin-top: 0;
 }
 
 .tengo_cuenta {
@@ -773,4 +781,43 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn_accion {
+  margin-top: 1rem;
+  text-decoration: none;
+  color: var(--color-6);
+  font-family: var(--font--2);
+  font-size: 2.5rem;
+  background-color: var(--color-2);
+  border-radius: 1rem;
+  padding: 1rem;
+  border: none;
+}
+.btn_accion:hover {
+  background-color: var(--color-3);
+  color: black;
+  border: none;
+}
+
+.gallery {
+  margin-top: 1rem;
+  height: 100%;
+  columns: 4 3.2rem;
+  column-gap: 2rem;
+}
+
+.gallery img {
+  max-width: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+  transition: filter 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.gallery img:hover {
+  filter: brightness(0.8); /* Restaura el brillo al pasar el cursor */
+  transform: scale(1.03); /* Aumenta ligeramente el tamaño */
 }

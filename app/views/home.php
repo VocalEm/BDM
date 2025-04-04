@@ -4,18 +4,7 @@ require_once __DIR__ . '/plantillas/header.php';
 ?>
 
 <body>
-    <header class="main_header" style="position: static;">
-        <div class="main_header_elements">
-            <div class="main_header_nameapp">
-                <h1 class="motion">MOTION</h1>
-            </div>
-            <form class="main_header_search">
-                <!--<input type="text" id="input_search_mp" placeholder="Buscar" class="input_search_mp" />
-                <img src="/app/views/assets/Search.png" alt="">-->
-            </form>
 
-        </div>
-    </header>
     <aside class="main_body_barralateral">
         <nav class="main_body_barralateral_iconos">
             <a class="icono_bl" href="/html/index.html">
@@ -25,27 +14,8 @@ require_once __DIR__ . '/plantillas/header.php';
                     class="header_icono"
                     alt="Inicio" />
             </a>
-            <a class="icono_bl">
-                <img
-                    id="OpenDash"
-                    src="/app/views/assets/Search.png"
-                    class="header_icono"
-                    alt="Buscar" />
-            </a>
-            <a class="icono_bl">
-                <img
-                    id="OpenDash"
-                    src="/app/views/assets/usuarios-alt (3) 1.png"
-                    class="header_icono"
-                    alt="Usuarios" />
-            </a>
-            <a class="icono_bl">
-                <img
-                    id="OpenDash"
-                    src="/app/views/assets/favorite.png"
-                    class="header_icono"
-                    alt="Favoritos" />
-            </a>
+
+
             <a class="icono_bl">
                 <img
                     id="OpenDash"
@@ -58,15 +28,7 @@ require_once __DIR__ . '/plantillas/header.php';
                     id="OpenDash"
                     src="/app/views/assets/Mask group.png"
                     class="header_icono"
-                    style="visibility: hidden"
                     alt="Oculto" />
-            </a>
-            <a>
-                <img
-                    id="OpenDash"
-                    src="/app/views/assets/More vertical.png"
-                    class="header_icono"
-                    alt="Más opciones" />
             </a>
         </nav>
     </aside>
@@ -207,6 +169,26 @@ require_once __DIR__ . '/plantillas/header.php';
             -->
 
             <div class="gallery">
+                <img src="/app/views/assets/deporte1.jpeg" alt="">
+                <img src="/app/views/assets/deporte2.jpeg" alt="">
+                <img src="/app/views/assets/deporte4.jpeg" alt="">
+                <img src="/app/views/assets/basket.png" alt="">
+                <img src="/app/views/assets/deporte1.jpeg" alt="">
+                <img src="/app/views/assets/deporte2.jpeg" alt="">
+                <img src="/app/views/assets/deporte4.jpeg" alt="">
+                <img src="/app/views/assets/basket.png" alt="">
+                <img src="/app/views/assets/deporte1.jpeg" alt="">
+                <img src="/app/views/assets/deporte2.jpeg" alt="">
+                <img src="/app/views/assets/deporte4.jpeg" alt="">
+                <img src="/app/views/assets/basket.png" alt="">
+                <img src="/app/views/assets/deporte1.jpeg" alt="">
+                <img src="/app/views/assets/deporte2.jpeg" alt="">
+                <img src="/app/views/assets/deporte4.jpeg" alt="">
+                <img src="/app/views/assets/basket.png" alt="">
+                <img src="/app/views/assets/deporte1.jpeg" alt="">
+                <img src="/app/views/assets/deporte2.jpeg" alt="">
+                <img src="/app/views/assets/deporte4.jpeg" alt="">
+
 
             </div>
 

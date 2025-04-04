@@ -127,7 +127,7 @@ class UsuarioDao
     public function obtenerUsuarioPorId($idUsuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 4; // Opción 4: Mostrar un usuario
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);

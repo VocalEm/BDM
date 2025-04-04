@@ -53,8 +53,8 @@ require_once __DIR__ . '/plantillas/head.php';
                 </div> <!-- Error message container -->
             </div>
             <div class="btn_label_reg">
-                <input type="submit" value="Registrarse" class="btn_sesion" id="btn_registrarse">
-                <a class="tengo_cuenta">Ya tengo cuenta.</a>
+                <input type="submit" value="Registrarse" class="btn_accion" id="btn_registrarse">
+                <a href="/login" class="tengo_cuenta">Ya tengo cuenta.</a>
             </div>
         </form>
     </div>
