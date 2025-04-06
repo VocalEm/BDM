@@ -12,11 +12,11 @@ require_once __DIR__ . '/plantillas/header.php';
         <div class="main_body_pageUsu" style="margin-left: 130px;">
             <div class="pageUsu_datosUsu">
                 <div class="foto_edit_Usu">
-                    <img id="foto_perfil" src="/app/views/assets/selfie sin dedo de dami.png" alt="Foto de perfil">
+                    <img id="foto_perfil" src="data:<?php echo $usuario->getTipoImg(); ?>;base64,<?php echo base64_encode($usuario->getFotoPerfil()); ?>" alt="Foto de perfil">
                     <?php
                     if ($usuarioEnSesion) {
                     ?>
-                        <a class="btn_accion" href="/html/editar.html">Editar perfil</a>
+                        <a class="btn_accion" href="/modificar">Editar perfil</a>
                     <?php
                     }
                     ?>

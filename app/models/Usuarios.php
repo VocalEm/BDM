@@ -16,6 +16,7 @@ class Usuarios
     private $password;
     private $fotoPerfil;
     private $privacidad;
+    private $tipoImg;
 
     public function __construct(
         $idUsuario = null,
@@ -28,7 +29,8 @@ class Usuarios
         $username = null,
         $password = null,
         $fotoPerfil = null,
-        $privacidad = 1
+        $privacidad = 1,
+        $tipoImg = null
     ) {
         $this->idUsuario = $idUsuario;
         $this->nombre = $nombre;
@@ -41,6 +43,7 @@ class Usuarios
         $this->password = $password;
         $this->fotoPerfil = $fotoPerfil;
         $this->privacidad = $privacidad;
+        $this->tipoImg = $tipoImg;
     }
 
     // Getters y Setters
@@ -52,6 +55,16 @@ class Usuarios
     {
         $this->idUsuario = $idUsuario;
     }
+
+    public function getTipoImg()
+    {
+        return $this->tipoImg;
+    }
+    public function setTipoImg($tipoImg)
+    {
+        $this->tipoImg = $tipoImg;
+    }
+
 
     public function getNombre()
     {

@@ -43,7 +43,8 @@ class PerfilController
                 $consulta['FOTO_PERFIL'],
                 $consulta['ESTATUS'],
                 $consulta['PRIVACIDAD'],
-                $consulta['FECHA_REGISTRO']
+                $consulta['FECHA_REGISTRO'],
+                $consulta['TIPO_IMG']
             );
             $usuarioEnSesion = $this->middleware->obtenerIdEnSesion($usuario->getIdUsuario()); // se usa en la pantalla de perfil
             require_once __DIR__ . '/../views/perfil.php';

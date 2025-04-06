@@ -112,12 +112,34 @@ a {
   margin-right: 0px;
   margin-left: 20px;
   margin-top: 100%;
-  width: 50px;
+  width: 10rem;
 }
 
 .icono_bl {
   padding-bottom: 7px;
   padding-top: 7px;
+  width: 60%;
+}
+
+.icono_bl_foto {
+  width: 70%;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+}
+
+.foto_usuario {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1; /* Mantener la imagen cuadrada */
+  border-radius: 100%;
+  border: none;
+  text-align: center;
 }
 
 .icono_cat {
@@ -156,15 +178,14 @@ a {
 }
 
 #OpenDash {
-  /*Iconos de la barra lateral*/
-  width: 50%;
+  width: 100%;
   align-items: center;
-  padding: 5px;
+
   transition: transform 0.5s ease;
 }
 
 #OpenDash:hover {
-  transform: scale(1.5);
+  transform: scale(1.3);
 }
 
 .main_body_public_fotos {
