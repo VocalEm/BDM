@@ -25,8 +25,7 @@ class HomeController
     {
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
-            // Si está autenticado, redirigir a la página de inicio
-
+            // Si está autenticado, redirigir a la página de inici
 
             $consulta = $this->usuarioDao->obtenerUsuarioPorId($_SESSION['id_user']);
             if (!$consulta) {

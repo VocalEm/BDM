@@ -29,9 +29,6 @@ class Router
 
         $nombreControlador = ucfirst($infoRuta['controlador']) . 'Controller';
         $archivoControlador = __DIR__ . "/../controllers/" . $nombreControlador . ".php"; // Corregido
-
-
-
         if (file_exists($archivoControlador)) {
             return $this->manejarControlador($archivoControlador, $nombreControlador, $infoRuta);
         }
