@@ -106,6 +106,6 @@ class Router
     // Método para obtener el controlador
     public function obtenerControlador()
     {
-        return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'home';
+        return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'login';
     }
 }

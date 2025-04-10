@@ -4,9 +4,19 @@
             <h1 class="motion">MOTION</h1>
         </a>
 
-        <div class="main_header_ri" style="display: none;">
-            <a class="main_headers" href="#">Registrarse</a>
-            <a class="main_headers" href="#">Iniciar Sesión</a>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Buscar...">
+            <button class="search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </div>
+
+
+
+        <!--
+        <div class="main_header_ri">
+            <a class=" main_headers" href="#">Registrarse</a>
+            <a class="main_headers" href="#">Iniciar Sesión</a>
+        </div>--!-->
     </div>
 </header>

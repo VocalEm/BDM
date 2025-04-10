@@ -50,13 +50,18 @@ class Middleware
 
     function cerrarSesion()
     {
-        session_start();
+        session_start(); // Iniciar la sesión
         session_unset(); // Eliminar todas las variables de sesión
         session_destroy(); // Destruir la sesión
-        setcookie('id_user', '', time() - 3600, "/"); // Eliminar la cookie
+
+        // Verificar si la cookie existe antes de intentar eliminarla
+        if (isset($_COOKIE['id_user'])) {
+            // Configurar la cookie con parámetros más específicos y un tiempo pasado
+            setcookie('id_user', '', time() - 3600, "/", "", false, true);
+        }
+
         $this->redirigir('/login'); // Redirigir al inicio de sesión
     }
-
     function verificarCookie()
     {
         if (isset($_COOKIE['id_user'])) {

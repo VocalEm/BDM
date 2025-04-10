@@ -26,30 +26,36 @@ class HomeController
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
             // Si está autenticado, redirigir a la página de inici
+            if (isset($_SESSION['id_user'])) {
 
-            $consulta = $this->usuarioDao->obtenerUsuarioPorId($_SESSION['id_user']);
-            if (!$consulta) {
-                header('Location: /home');
+
+                $consulta = $this->usuarioDao->obtenerUsuarioPorId($_SESSION['id_user']);
+                if (!$consulta) {
+                    header('Location: /home');
+                    exit;
+                }
+                $usuario = new Usuarios(
+                    $consulta['ID_USUARIO'],
+                    $consulta['NOMBRE'],
+                    $consulta['APELLIDO_PATERNO'],
+                    $consulta['APELLIDO_MATERNO'],
+                    $consulta['CORREO'],
+                    $consulta['FECHA_NACIMINENTO'],
+                    $consulta['SEXO'],
+                    $consulta['USERNAME'],
+                    $consulta['PASSWORD'],
+                    $consulta['FOTO_PERFIL'],
+                    $consulta['ESTATUS'],
+                    $consulta['PRIVACIDAD'],
+                    $consulta['FECHA_REGISTRO'],
+                    $consulta['TIPO_IMG']
+                );
+                require_once __DIR__ . '/../views/home.php';
                 exit;
+            } else {
+                // Si no está autenticado, redirigir a la página de inicio de sesión
+                $this->middleware->cerrarSesion();
             }
-            $usuario = new Usuarios(
-                $consulta['ID_USUARIO'],
-                $consulta['NOMBRE'],
-                $consulta['APELLIDO_PATERNO'],
-                $consulta['APELLIDO_MATERNO'],
-                $consulta['CORREO'],
-                $consulta['FECHA_NACIMINENTO'],
-                $consulta['SEXO'],
-                $consulta['USERNAME'],
-                $consulta['PASSWORD'],
-                $consulta['FOTO_PERFIL'],
-                $consulta['ESTATUS'],
-                $consulta['PRIVACIDAD'],
-                $consulta['FECHA_REGISTRO'],
-                $consulta['TIPO_IMG']
-            );
-            require_once __DIR__ . '/../views/home.php';
-            exit;
         }
     }
 }

@@ -32,14 +32,17 @@ document.addEventListener("DOMContentLoaded", () => {
       hasErrors = true;
     }
 
-    // Validar contraseña
+    // Validar contraseña solo si no está vacía
     const password = document.getElementById("input_pass_reg");
-    if (!validarPassword(password.value)) {
-      mostrarError(
-        password,
-        "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial (como @, $, !, %, *, ?, &, o .)."
-      );
-      hasErrors = true;
+    const isModificarPage = window.location.pathname.includes("modificar"); // Detectar si estamos en la pantalla de modificar
+    if (!isModificarPage || (isModificarPage && password.value.trim() !== "")) {
+      if (!validarPassword(password.value)) {
+        mostrarError(
+          password,
+          "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial (como @, $, !, %, *, ?, &, o .)."
+        );
+        hasErrors = true;
+      }
     }
 
     if (hasErrors) {
