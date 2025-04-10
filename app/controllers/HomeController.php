@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\Daos\UsuarioDao;
 use App\Core\Middleware;
-use App\Models\Usuarios;;
+use App\Models\Usuarios;
 
 require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
 require_once __DIR__ . '/../models/Usuarios.php';

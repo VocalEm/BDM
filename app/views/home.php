@@ -27,27 +27,27 @@ require_once __DIR__ . '/plantillas/header.php';
 
 
             <div class="gallery">
-                <img src="/app/views/assets/deporte1.jpeg" alt="">
-                <img src="/app/views/assets/deporte2.jpeg" alt="">
-                <img src="/app/views/assets/deporte4.jpeg" alt="">
-                <img src="/app/views/assets/basket.png" alt="">
-                <img src="/app/views/assets/deporte1.jpeg" alt="">
-                <img src="/app/views/assets/deporte2.jpeg" alt="">
-                <img src="/app/views/assets/deporte4.jpeg" alt="">
-                <img src="/app/views/assets/basket.png" alt="">
-                <img src="/app/views/assets/deporte1.jpeg" alt="">
-                <img src="/app/views/assets/deporte2.jpeg" alt="">
-                <img src="/app/views/assets/deporte4.jpeg" alt="">
-                <img src="/app/views/assets/basket.png" alt="">
-                <img src="/app/views/assets/deporte1.jpeg" alt="">
-                <img src="/app/views/assets/deporte2.jpeg" alt="">
-                <img src="/app/views/assets/deporte4.jpeg" alt="">
-                <img src="/app/views/assets/basket.png" alt="">
-                <img src="/app/views/assets/deporte1.jpeg" alt="">
-                <img src="/app/views/assets/deporte2.jpeg" alt="">
-                <img src="/app/views/assets/deporte4.jpeg" alt="">
-
-
+                <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
+                <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
             </div>
 
         </section>

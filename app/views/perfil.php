@@ -25,7 +25,7 @@ require_once __DIR__ . '/plantillas/header.php';
                 <div class="datos_Usu">
                     <div class="nombre_usu">
                         <h1 id="Username" name="Username"><?php
-                                                            echo $usuario->getNombre();
+                                                            echo $usuario->getUsername();
                                                             ?></h1>
                         <img src="/app/views/assets/Eye off.png" style="width: 25px; height: 25px; margin: 10px;" alt="Eye Icon">
                     </div>
@@ -35,38 +35,41 @@ require_once __DIR__ . '/plantillas/header.php';
                         <p class="numeros" id="followers" name="followers">#Seguidores</p>
                         <p class="numeros" id="follows" name="follows">#Seguidos</p>
                     </div>
-                    <a class="btn_tablero" id="btn_tablero" href="/html/tablero.html">Tableros</a>
+                    <div class="botones_perfil"> <a class="btn_tablero" id="btn_tablero" href="/tableros">Tableros</a>
+                        <a class="btn_tablero" id="btn_reportes" href="/reportes">Reportes</a>
+                    </div>
+
                 </div>
             </div>
 
             <div class="pageUsu_publics">
                 <div class="publicaciones-grid">
                     <div class="publicacion">
-                        <img src="/app/views/assets/golf.png" alt="Publicación 1">
+                        <a href="/publicacion"><img src="/app/views/assets/golf.png" alt="Publicación 1"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/natacion2.png" alt="Publicación 2">
+                        <a href="/publicacion"><img src="/app/views/assets/natacion2.png" alt="Publicación 2"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/basket.png" alt="Publicación 3">
+                        <a href="/publicacion"><img src="/app/views/assets/basket.png" alt="Publicación 3"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/bici.png" alt="Publicación 4">
+                        <a href="/publicacion"><img src="/app/views/assets/bici.png" alt="Publicación 4"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/esgrima.png" alt="Publicación 5">
+                        <a href="/publicacion"><img src="/app/views/assets/esgrima.png" alt="Publicación 5"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/running.png" alt="Publicación 6">
+                        <a href="/publicacion"><img src="/app/views/assets/running.png" alt="Publicación 6"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/soccer.png" alt="Publicación 7">
+                        <a href="/publicacion"><img src="/app/views/assets/soccer.png" alt="Publicación 7"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/run.png" alt="Publicación 8">
+                        <a href="/publicacion"><img src="/app/views/assets/run.png" alt="Publicación 8"></a>
                     </div>
                     <div class="publicacion">
-                        <img src="/app/views/assets/tennis.png" alt="Publicación 9">
+                        <a href="/publicacion"><img src="/app/views/assets/tennis.png" alt="Publicación 9"></a>
                     </div>
                 </div>
             </div>

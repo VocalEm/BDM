@@ -4,8 +4,11 @@
             <i class="fa-solid fa-house fa-6x"></i>
         </a>
 
-        <a class="icono_bl">
-            <i class="fa-regular fa-square-plus fa-6x"></i>
+        <a class="icono_bl" href="/crearpublicacion">
+            <i class=" fa-regular fa-square-plus fa-6x"></i>
+        </a>
+        <a class="icono_bl" href="/solicitudes">
+            <i class="fa-solid fa-user-plus fa-6x"></i>
         </a>
         <a class="icono_bl icono_bl_foto" href="/perfil/render/<?php
                                                                 if (isset($_SESSION['id_user'])) {

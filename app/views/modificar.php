@@ -66,6 +66,11 @@ require_once __DIR__ . '/plantillas/header.php';
                 <div class="btn_label_reg">
                     <input value="Modificar Usuario" name="enviar" type="submit" class="btn_accion" id="btn_guardarCambios" style="font-size: 15px; background-color: #FBBF24;margin-top: 0px;">
                 </div>
+                <div class="btn_label_reg">
+                    <button type="button" class="btn_accion btn_darBaja" id="btn_darBaja">
+                        Dar de Baja Perfil
+                    </button>
+                </div>
             </form>
         </div>
     </main>

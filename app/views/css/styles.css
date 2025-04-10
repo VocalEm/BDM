@@ -93,6 +93,7 @@ a {
 .main_body_index {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .main_body_barralateral {
@@ -220,8 +221,9 @@ a {
 .main_body_publicS {
   display: flex;
   flex-direction: column;
-  margin-left: 515px;
-  margin-top: 20px;
+  justify-content: center;
+  font-size: 3rem;
+  padding-left: 20rem;
 }
 
 .main_body_public_usu {
@@ -635,6 +637,7 @@ a {
   align-items: flex-start;
   margin: 20px;
   margin-top: 0px;
+  font-size: 2rem;
 }
 
 .comentario_post {
@@ -735,16 +738,23 @@ a {
 /*-----------------------------------------PAGINA DE REPORTE---------------------------------------------*/
 .main_body_indexRep {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .main_body_pageReporte {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .pageRep_datos {
   display: flex;
+  width: 100%;
+
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
@@ -753,9 +763,13 @@ a {
   margin-right: 500px;
 }
 
+.pageRep_datos h1 {
+  font-size: 4rem;
+}
+
 .tarjeta-userRep {
-  width: 20rem;
-  height: 5rem;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   gap: 1rem;
@@ -766,11 +780,12 @@ a {
   padding: 0.1rem;
   margin-bottom: 1rem;
   font-family: var(--font--2);
+  font-size: 4rem;
 }
 
 .tarjeta-userRep img {
-  width: 3rem;
-  height: 3rem;
+  width: 5rem;
+  height: 5rem;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -901,4 +916,152 @@ a {
 
 .search-button i:hover {
   transform: scale(1.5);
+}
+
+/* Styles for toggle buttons */
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.toggle-button {
+  padding: 1rem 2rem;
+  font-family: var(--font--2);
+  font-size: 1.6rem;
+  color: var(--color-6);
+  background-color: var(--color-2);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: var(--color-3);
+}
+
+.toggle-button.active {
+  background-color: var(--color-4);
+  color: black;
+}
+
+/* Grid layout for followers list */
+.followers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+.main_body_publicaciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post_coment {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for the "dar de baja" button */
+.btn_darBaja {
+  background-color: red;
+  color: white;
+  font-size: 1.8rem;
+  font-family: var(--font--2);
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn_darBaja:hover {
+  background-color: #ff6666; /* Cambia a un rojo más claro */
+  transform: scale(1.05);
+}
+
+/* Grid layout for user requests */
+.requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  margin-top: 2rem;
+}
+
+/* Styles for user request cards */
+.tarjeta-userRep {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  border: 1px solid var(--color-4);
+  border-radius: 10px;
+  padding: 1rem;
+  font-family: var(--font--2);
+  font-size: 1.6rem;
+  background-color: var(--color-1);
+}
+
+.tarjeta-userRep img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn_accept {
+  background-color: var(--color-3);
+  color: black;
+  font-size: 1.4rem;
+  font-family: var(--font--2);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn_accept:hover {
+  background-color: var(--color-4);
+  transform: scale(1.05);
+}
+
+.btn_reject {
+  background-color: red;
+  color: white;
+  font-size: 1.4rem;
+  font-family: var(--font--2);
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn_reject:hover {
+  background-color: #ff6666;
+  transform: scale(1.05);
+}
+
+.botones_perfil {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
