@@ -8,7 +8,10 @@ class Middleware
     private static $instance;
 
     // Constructor privado para evitar instanciación directa
-    private function __construct() {}
+    private function __construct()
+    {
+        session_start();
+    }
 
     // Método para obtener la instancia única
     public static function getInstance()
@@ -16,13 +19,13 @@ class Middleware
         if (!self::$instance) {
             self::$instance = new Middleware();
         }
+
         return self::$instance;
     }
 
 
     function autenticarUsuario()
     {
-        session_start();
         // Verificar si la sesión es válida
         if (isset($_SESSION['id_user'])) {
             return true; // Usuario autenticado con sesión
@@ -35,12 +38,11 @@ class Middleware
         }
 
         // Si no tiene sesión ni cookie, no está autenticado
-        $this->redirigir('/login');
+        return false;
     }
 
     function autenticarSesion()
     {
-        session_start();
         if (isset($_SESSION['id_user'])) {
             return true; // Usuario autenticado
         } else {
@@ -50,7 +52,6 @@ class Middleware
 
     function cerrarSesion()
     {
-        session_start(); // Iniciar la sesión
         session_unset(); // Eliminar todas las variables de sesión
         session_destroy(); // Destruir la sesión
 
@@ -77,7 +78,6 @@ class Middleware
             return false; // No se puede iniciar sesión sin un ID válido
         }
 
-        session_start();
         $_SESSION['id_user'] = $id; // Asignar el ID de usuario a la sesión
 
         if ($recordarSesion) {
@@ -90,7 +90,6 @@ class Middleware
 
     function estaAutenticado()
     {
-        session_start();
         if (isset($_SESSION['id_user']) || isset($_COOKIE['id_user'])) {
             return true; // Usuario autenticado
         }

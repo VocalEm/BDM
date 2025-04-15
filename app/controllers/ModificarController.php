@@ -6,9 +6,6 @@ use App\Core\Middleware;
 use App\Controllers\Daos\UsuarioDao;
 use App\Models\Usuarios;
 
-require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
-require_once __DIR__ . '/../models/Usuarios.php';
-
 class ModificarController
 {
 
@@ -19,37 +16,23 @@ class ModificarController
     public function __construct()
     {
         $this->middleware = Middleware::getInstance();
-        $this->usuarioDao = new UsuarioDao();
+        $this->usuarioDao = UsuarioDao::getInstance();
     }
 
     public function render()
     {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
         if ($this->middleware->autenticarUsuario()) {
-            $usuarioId = $_SESSION['id_user'];
-            $usuarioDao = new UsuarioDao();
-            $data = $usuarioDao->obtenerUsuarioPorId($usuarioId);
-            $usuario = new Usuarios(
-                $data['ID_USUARIO'],
-                $data['NOMBRE'],
-                $data['APELLIDO_PATERNO'],
-                $data['APELLIDO_MATERNO'],
-                $data['CORREO'],
-                $data['FECHA_NACIMINENTO'],
-                $data['SEXO'],
-                $data['USERNAME'],
-                $data['PASSWORD'],
-                $data['FOTO_PERFIL'],
-                $data['ESTATUS'],
-                $data['PRIVACIDAD'],
-                $data['FECHA_REGISTRO'],
-                $data['TIPO_IMG']
-            );
+
             require_once __DIR__ . '/../views/modificar.php';
         }
     }
 
     public function form()
     {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
         if ($this->middleware->autenticarUsuario()) {
             // Validar si se subió un archivo
             if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK) {
@@ -116,6 +99,9 @@ class ModificarController
                 echo $error;
                 require_once __DIR__ . '/../views/modificar.php';
             }
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
         }
     }
 }

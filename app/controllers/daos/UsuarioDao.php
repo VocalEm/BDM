@@ -5,11 +5,10 @@ namespace App\Controllers\Daos;
 use App\Core\Database;
 use App\Models\Usuarios;
 
-
-
 class UsuarioDao
 {
     private $conexion;
+    private static $instance = null;
 
     public function __construct()
     {
@@ -20,7 +19,7 @@ class UsuarioDao
     public function agregarUsuario(Usuarios $usuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(
+            $stmt = $this->conexion->prepare("CALL sp_usuario(
                 :opcion, NULL, :nombre, :apellidoPaterno, :apellidoMaterno, 
                 :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg
             )");
@@ -71,7 +70,7 @@ class UsuarioDao
     public function modificarUsuario(Usuarios $usuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(
+            $stmt = $this->conexion->prepare("CALL sp_usuario(
                 :opcion, :idUsuario, :nombre, :apellidoPaterno, :apellidoMaterno, 
                 :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg
             )");
@@ -127,7 +126,7 @@ class UsuarioDao
     public function eliminarUsuario($idUsuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 2; // Opción 2: Desactivar un usuario
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
@@ -143,7 +142,7 @@ class UsuarioDao
     public function obtenerUsuarioPorId($idUsuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 4; // Opción 4: Mostrar un usuario
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
@@ -162,7 +161,7 @@ class UsuarioDao
     {
         try {
             // Llamada al procedimiento almacenado con la opción 5
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 5; // Opción 5: Obtener todos los usuarios
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
@@ -179,7 +178,7 @@ class UsuarioDao
     public function login($correo)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
             $opcion = 6; // Opción 6: Login
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
@@ -196,5 +195,13 @@ class UsuarioDao
             echo "Error al iniciar sesión: " . $e->getMessage();
             return false;
         }
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance == null) {
+            self::$instance = new UsuarioDao();
+        }
+        return self::$instance;
     }
 }

@@ -1,3 +1,7 @@
+<?php
+// Asegurarse de que la variable global esté disponible
+global $usuarioSesion;
+?>
 <aside class="main_body_barralateral">
     <nav class="main_body_barralateral_iconos">
         <a class="icono_bl" href="/home">
@@ -14,23 +18,22 @@
                                                                 if (isset($_SESSION['id_user'])) {
                                                                     echo $_SESSION['id_user'];
                                                                 } else {
-                                                                    session_start();
-                                                                    session_unset(); // Eliminar todas las variables de sesión
-                                                                    session_destroy(); // Destruir la sesión
-                                                                    if (isset($_COOKIE['id_user'])) {
-                                                                        // Configurar la cookie con parámetros más específicos y un tiempo pasado
-                                                                        setcookie('id_user', '', time() - 3600, "/", "", false, true);
-                                                                    }
-                                                                    $this->redirigir('/login'); // Redirigir al inicio de sesión
+                                                                    $this->middleware->cerrarSesion();
                                                                 }
                                                                 ?>">
-
-
-            <img
-                id="OpenDash"
-                src="data:<?php echo $usuario->getTipoImg(); ?>;base64,<?php echo base64_encode($usuario->getFotoPerfil()); ?>"
-                class="header_icono foto_usuario"
-                alt="Oculto" />
+            <?php if (isset($usuarioSesion) && $usuarioSesion !== null): ?>
+                <img
+                    id="OpenDash"
+                    src="data:<?php echo $usuarioSesion->getTipoImg(); ?>;base64,<?php echo base64_encode($usuarioSesion->getFotoPerfil()); ?>"
+                    class="header_icono foto_usuario"
+                    alt="Oculto" />
+            <?php else: ?>
+                <img
+                    id="OpenDash"
+                    src="/path/to/default/image.png"
+                    class="header_icono foto_usuario"
+                    alt="Imagen por defecto" />
+            <?php endif; ?>
         </a>
         <a class="icono_bl">
             <i class="fa-solid fa-right-from-bracket fa-6x"></i>

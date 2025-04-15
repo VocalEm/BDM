@@ -13,7 +13,7 @@ require_once __DIR__ . '/plantillas/header.php';
             <div class="pageRep_datos"> <!-- Divisor de la página del Usuario-->
                 <div class="foto_edit_Usu">
                     <div class="foto_edit_Usu">
-                        <img id="foto_perfil" src="data:<?php echo $usuario->getTipoImg(); ?>;base64,<?php echo base64_encode($usuario->getFotoPerfil()); ?>" alt="Foto de perfil">
+                        <img id="foto_perfil" src="data:<?php echo $usuarioSesion->getTipoImg(); ?>;base64,<?php echo base64_encode($usuarioSesion->getFotoPerfil()); ?>" alt="Foto de perfil">
                     </div>
                     <h1 class="reporte-titulo">Lista de seguidores</h1>
                 </div>

@@ -2,14 +2,21 @@
 
 namespace App\Core;
 
+use App\Controllers\Daos\UsuarioDao;
+use App\Models\Usuarios;
+
 
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Middleware.php';
+require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
+require_once __DIR__ . '/../models/Usuarios.php';
 
 class Router
 {
     private $segmentosURL;
     private $parametrosConsulta;
+    private $usuarioDao;
+    private $middleware;
 
 
     public function __construct($_url)
@@ -20,6 +27,8 @@ class Router
 
         $this->segmentosURL = explode('/', ucfirst(trim($ruta, '/')));
         $this->parametrosConsulta = $this->analizarParametrosConsulta($cadenaConsulta);
+        $this->usuarioDao = UsuarioDao::getInstance(); // Instancia de UsuarioDao
+        $this->middleware = Middleware::getInstance(); // Instancia de Middleware
     }
 
     // Método principal para manejar el enrutamiento
@@ -46,6 +55,10 @@ class Router
         // Instanciar el controlador
         $controlador = new $nombreControladorConNamespace();
         $accion = $infoRuta['accion'];
+
+        // Establecer el usuario en una variable global
+        global $usuarioSesion;
+        $usuarioSesion = $this->obtenerUsuarioEnSesion();
 
         if (method_exists($controlador, $accion)) {
             return call_user_func_array(
@@ -106,6 +119,37 @@ class Router
     // Método para obtener el controlador
     public function obtenerControlador()
     {
-        return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'login';
+        return isset($this->segmentosURL[0]) && $this->segmentosURL[0] !== '' ? $this->segmentosURL[0] : 'home';
+    }
+
+    private function obtenerUsuarioEnSesion()
+    {
+        if ($this->middleware->autenticarUsuario()) {
+
+            $consulta = $this->usuarioDao->obtenerUsuarioPorId($_SESSION['id_user']);
+            if (!$consulta) {
+                header('Location: /login');
+                exit;
+            }
+            $usuario = new Usuarios(
+                $consulta['ID_USUARIO'],
+                $consulta['NOMBRE'],
+                $consulta['APELLIDO_PATERNO'],
+                $consulta['APELLIDO_MATERNO'],
+                $consulta['CORREO'],
+                $consulta['FECHA_NACIMINENTO'],
+                $consulta['SEXO'],
+                $consulta['USERNAME'],
+                $consulta['PASSWORD'],
+                $consulta['FOTO_PERFIL'],
+                $consulta['ESTATUS'],
+                $consulta['PRIVACIDAD'],
+                $consulta['FECHA_REGISTRO'],
+                $consulta['TIPO_IMG']
+            );
+            return $usuario;
+        } else {
+            $this->middleware->cerrarSesion();
+        }
     }
 }

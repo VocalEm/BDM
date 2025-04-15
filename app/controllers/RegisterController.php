@@ -5,15 +5,16 @@ namespace App\Controllers;
 use App\Controllers\Daos\UsuarioDao;
 use App\Models\Usuarios;
 
-require_once __DIR__ . '/../models/Usuarios.php';
-require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
 
 class RegisterController
 {
 
-    public function __construct() {}
+    private $usuarioDao;
 
-    public function index() {}
+    public function __construct()
+    {
+        $this->usuarioDao = UsuarioDao::getInstance(); // Instancia de UsuarioDao
+    }
 
     public function render()
     {
@@ -52,8 +53,7 @@ class RegisterController
 
             // Validar los datos del formulario (puedes agregar más validaciones según sea necesario)
 
-            $usuarioDao = new UsuarioDao();
-            $respuesta = $usuarioDao->agregarUsuario($usuario);
+            $respuesta = $this->usuarioDao->agregarUsuario($usuario);
 
             switch ($respuesta) {
                 case "correcto":

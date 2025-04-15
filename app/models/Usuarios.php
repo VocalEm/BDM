@@ -17,6 +17,8 @@ class Usuarios
     private $fotoPerfil;
     private $privacidad;
     private $tipoImg;
+    private $fechaRegistro;
+
 
     public function __construct(
         $idUsuario = null,
