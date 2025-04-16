@@ -16,6 +16,31 @@ class Publicaciones
     private string $tipo_img;
     private $imagen; // longblob
 
+    // Constructor
+    public function __construct(
+        int $id_publicacion,
+        string $descripcion,
+        int $id_usuario,
+        string $categoria,
+        int $estatus,
+        string $fecha_creacion,
+        int $contador_likes,
+        string $ruta_video,
+        string $tipo_img,
+        $imagen
+    ) {
+        $this->id_publicacion = $id_publicacion;
+        $this->descripcion = $descripcion;
+        $this->id_usuario = $id_usuario;
+        $this->categoria = $categoria;
+        $this->estatus = $estatus;
+        $this->fecha_creacion = $fecha_creacion;
+        $this->contador_likes = $contador_likes;
+        $this->ruta_video = $ruta_video;
+        $this->tipo_img = $tipo_img;
+        $this->imagen = $imagen;
+    }
+
     // Getters and Setters
     public function getIdPublicacion(): int
     {

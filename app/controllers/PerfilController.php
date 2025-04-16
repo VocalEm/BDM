@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\Daos\UsuarioDao;
 use App\Core\Middleware;
-use App\Models\Usuarios;;
+use App\Models\Usuarios;
+use App\Controllers\Daos\PublicacionDao;
 
 
 
@@ -53,6 +54,7 @@ class PerfilController
                         $consulta['TIPO_IMG']
                     );
                 }
+                $publicaciones = PublicacionDao::GetInstance()->obtenerPublicacionUsuario($usuario->getIdUsuario());
             }
             require_once __DIR__ . '/../views/perfil.php';
         } else {

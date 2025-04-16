@@ -59,7 +59,12 @@ class CrearpublicacionController
                     $videoUniqueName = uniqid('video_', true) . '.' . $videoExtension;
 
                     // Ruta donde se guardará el video
-                    $videoDestination = __DIR__ . '/../views/assets/videos/' . $videoUniqueName;
+                    $targetDir = __DIR__ . '/../views/assets/videos/';
+                    if (!is_dir($targetDir)) {
+                        mkdir($targetDir, 0777, true); // Create the directory with proper permissions
+                    }
+
+                    $videoDestination = $targetDir . $videoUniqueName;
 
                     // Mover el archivo a la carpeta de destino
                     if (move_uploaded_file($videoTmpName, $videoDestination)) {

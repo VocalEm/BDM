@@ -84,6 +84,22 @@ BEGIN
             ID_CATEGORIA,
             NOMBRE
             FROM categoria;
+		
+        -- opcion 7 obtiene publicaciones de un usuario en especifico
+		WHEN 7 THEN
+			SELECT
+				ID_PUBLICACION,
+                DESCRIPCION,
+                ID_USUARIO,
+                CATEGORIA,
+                ESTATUS,
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+			FROM publicaciones
+            WHERE ID_USUARIO = p_ID_USUARIO;
             
         -- Manejo de error: Opción no válida
         ELSE

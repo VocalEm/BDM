@@ -161,6 +161,22 @@ class PublicacionDao
         }
     }
 
+    public function obtenerPublicacionUsuario($id_usuario)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_publicacion(:opcion, NULL, NULL, :id_usuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $opcion = 7;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':id_usuario', $id_usuario, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener publicaciones: " . $e->getMessage();
+            return [];
+        }
+    }
+
     public static function getInstance()
     {
         if (self::$instance == null) {
@@ -168,4 +184,6 @@ class PublicacionDao
         }
         return self::$instance;
     }
+
+    public function CrearComentario() {} // funcion para crear comentario, posible crear un modelo o crear un dao para comentarios
 }

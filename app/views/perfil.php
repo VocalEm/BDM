@@ -44,33 +44,29 @@ require_once __DIR__ . '/plantillas/header.php';
 
             <div class="pageUsu_publics">
                 <div class="publicaciones-grid">
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/golf.png" alt="Publicación 1"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/natacion2.png" alt="Publicación 2"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/basket.png" alt="Publicación 3"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/bici.png" alt="Publicación 4"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/esgrima.png" alt="Publicación 5"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/running.png" alt="Publicación 6"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/soccer.png" alt="Publicación 7"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/run.png" alt="Publicación 8"></a>
-                    </div>
-                    <div class="publicacion">
-                        <a href="/publicacion"><img src="/app/views/assets/tennis.png" alt="Publicación 9"></a>
-                    </div>
+                    <?php
+                    foreach ($publicaciones as $publicacion) {
+                        $tipoImg = $publicacion['TIPO_IMG'];
+                        $imagen = $publicacion['IMAGEN'];
+                        $rutaVideo = $publicacion['RUTA_VIDEO'];
+                        $descripcion = $publicacion['DESCRIPCION'];
+                        $idPublicacion = $publicacion['ID_PUBLICACION'];
+                    ?>
+                        <div class="publicacion">
+                            <a href="/publicacion/post/<?php echo $idPublicacion; ?>">
+                                <?php if (!empty($imagen)) { ?>
+                                    <img src="data:<?php echo $tipoImg; ?>;base64,<?php echo base64_encode($imagen); ?>" alt="Publicación">
+                                <?php } else if (!empty($rutaVideo) && file_exists(__DIR__ . '/assets/videos/' . basename($rutaVideo))) { ?>
+                                    <video autoplay loop muted>
+                                        <source src="/app/views/assets/videos/<?php echo basename($rutaVideo); ?>" type="video/mp4">
+                                        Tu navegador no soporta la reproducción de videos.
+                                    </video>
+                                <?php } else { ?>
+                                    <p>Video no disponible.</p>
+                                <?php } ?>
+                            </a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Controllers\Daos\PublicacionDao;
 use App\Controllers\Daos\UsuarioDao;
 use App\Core\Middleware;
-use App\Models\Usuarios;;
+use App\Models\Usuarios;
+use App\Models\Publicaciones;
 
 class PublicacionController
 {
@@ -17,44 +19,8 @@ class PublicacionController
         $this->middleware = Middleware::getInstance();
         $this->usuarioDao = UsuarioDao::getInstance(); // Instancia de UsuarioDao
     }
-    public function index() {}
 
-    public function render()
-    {
-        // Verificar si el usuario está autenticado
-        if ($this->middleware->autenticarUsuario()) {
-            // Si está autenticado, redirigir a la página de inici
-            if (isset($_SESSION['id_user'])) {
-
-                $consulta = $this->usuarioDao->obtenerUsuarioPorId($_SESSION['id_user']);
-                if (!$consulta) {
-                    header('Location: /home');
-                    exit;
-                }
-                $usuario = new Usuarios(
-                    $consulta['ID_USUARIO'],
-                    $consulta['NOMBRE'],
-                    $consulta['APELLIDO_PATERNO'],
-                    $consulta['APELLIDO_MATERNO'],
-                    $consulta['CORREO'],
-                    $consulta['FECHA_NACIMINENTO'],
-                    $consulta['SEXO'],
-                    $consulta['USERNAME'],
-                    $consulta['PASSWORD'],
-                    $consulta['FOTO_PERFIL'],
-                    $consulta['ESTATUS'],
-                    $consulta['PRIVACIDAD'],
-                    $consulta['FECHA_REGISTRO'],
-                    $consulta['TIPO_IMG']
-                );
-                require_once __DIR__ . '/../views/post.php';
-                exit;
-            } else {
-                // Si no está autenticado, redirigir a la página de inicio de sesión
-                $this->middleware->cerrarSesion();
-            }
-        }
-    }
+    public function render() {}
 
     public function postusuario()
     {
@@ -70,4 +36,70 @@ class PublicacionController
             $this->middleware->cerrarSesion();
         }
     }
+
+    public function post($id)
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        // Verificar si el usuario está autenticado
+        if ($this->middleware->autenticarUsuario()) {
+            $dataPublicacion = PublicacionDao::GetInstance()->obtenerPublicacionPorId($id);
+            $publicacion = new publicaciones(
+                $dataPublicacion['ID_PUBLICACION'],
+                $dataPublicacion['DESCRIPCION'],
+                $dataPublicacion['ID_USUARIO'],
+                $dataPublicacion['CATEGORIA'],
+                $dataPublicacion['ESTATUS'],
+                $dataPublicacion['FECHA_CREACION'],
+                $dataPublicacion['CONTADOR_LIKES'],
+                $dataPublicacion['RUTA_VIDEO'],
+                $dataPublicacion['TIPO_IMG'],
+                $dataPublicacion['IMAGEN']
+            );
+            $dataUser = $this->usuarioDao->obtenerUsuarioPorId($publicacion->getIdUsuario());
+            $usuario = new Usuarios(
+                $dataUser['ID_USUARIO'],
+                $dataUser['NOMBRE'],
+                $dataUser['APELLIDO_PATERNO'],
+                $dataUser['APELLIDO_MATERNO'],
+                $dataUser['CORREO'],
+                $dataUser['FECHA_NACIMINENTO'],
+                $dataUser['SEXO'],
+                $dataUser['USERNAME'],
+                $dataUser['PASSWORD'],
+                $dataUser['FOTO_PERFIL'],
+                $dataUser['ESTATUS'],
+                $dataUser['PRIVACIDAD'],
+                $dataUser['FECHA_REGISTRO'],
+                $dataUser['TIPO_IMG']
+            );
+            require_once __DIR__ . '/../views/post.php';
+            exit;
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
+        }
+    }
+
+    public function comentar()
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        // Verificar si el usuario está autenticado
+        if ($this->middleware->autenticarUsuario()) {
+            $id_publicacion = $_POST['id_publicacion'];
+            $comentario = $_POST['comentario'];
+            $id_usuario = $usuarioSesion->getIdUsuario(); // Obtener el ID del usuario autenticado
+            // Aquí puedes agregar la lógica para guardar el comentario en la base de datos
+            // Por ejemplo, llamar a un método en el modelo o DAO para insertar el comentario
+            // PublicacionDao::GetInstance()->guardarComentario($id_publicacion, $comentario);
+            echo "Comentario guardado con éxito"; // Mensaje de éxito (puedes cambiarlo según tus necesidades)
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
+        }
+    }
 }
+
+
+//quitar el inncesario de usuario en el render
