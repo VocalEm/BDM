@@ -146,6 +146,21 @@ class PublicacionDao
         }
     }
 
+    public function obtenerCategorias()
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_publicacion(:opcion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $opcion = 6; // Opción 5: Obtener todas las categorias
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener publicaciones: " . $e->getMessage();
+            return [];
+        }
+    }
+
     public static function getInstance()
     {
         if (self::$instance == null) {

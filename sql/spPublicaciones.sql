@@ -1,4 +1,3 @@
-DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_publicacion`(
     IN p_opcion INT,
     IN p_ID_PUBLICACION INT,
@@ -78,11 +77,17 @@ BEGIN
                 TIPO_IMG,
                 IMAGEN
             FROM publicaciones;
-
+        
+        -- opcion 6 obtener todas las categorias
+		WHEN 6 THEN 
+			SELECT
+            ID_CATEGORIA,
+            NOMBRE
+            FROM categoria;
+            
         -- Manejo de error: Opción no válida
         ELSE
             SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Opción no válida en el procedimiento';
     END CASE;
-END ;;
-DELIMITER ;
+END

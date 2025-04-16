@@ -9,7 +9,9 @@ use App\Models\Usuarios;
 require_once __DIR__ . '/Database.php';
 require_once __DIR__ . '/Middleware.php';
 require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
+require_once __DIR__ . '/../controllers/Daos/PublicacionDao.php';
 require_once __DIR__ . '/../models/Usuarios.php';
+require_once __DIR__ . '/../models/Publicaciones.php';
 
 class Router
 {

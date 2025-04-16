@@ -1065,3 +1065,21 @@ a {
   align-items: center;
   gap: 1rem;
 }
+
+/* Estilos para el botón de cancelar */
+.btn_cancel {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 2rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn_cancel:hover {
+  background-color: #e60000; /* Cambia a un rojo más oscuro */
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agrega un efecto de sombra */
+}

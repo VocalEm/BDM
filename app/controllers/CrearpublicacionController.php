@@ -20,6 +20,7 @@ class CrearpublicacionController
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
             // Si está autenticado, redirigir a la página de inici
+            $categorias = PublicacionDao::getInstance()->obtenerCategorias();
             require_once __DIR__ . '/../views/crearPublicacion.php';
             exit;
         } else {
@@ -31,17 +32,43 @@ class CrearpublicacionController
     //TODO: falta la funcionalidad de las categorias para que esto funcione
     public function form()
     {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
         if ($this->middleware->autenticarUsuario()) {
             // Procesar el formulario de creación de publicación
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $descripcion = $_POST['descripcion'] ?? '';
-                $idUsuario = $_SESSION['id_usuario'] ?? null; // Obtener el ID del usuario autenticado
+                $idUsuario = $usuarioSesion->getIdUsuario() ?? null; // Obtener el ID del usuario autenticado
                 $categoria = $_POST['categoria'] ?? '';
                 $estatus = 1; // Publicación activa por defecto
                 $contadorLikes = 0; // Inicializar contador de likes
-                $rutaVideo = $_POST['ruta_video'] ?? '';
-                $tipoImg = $_FILES['imagen']['type'] ?? '';
-                $imagen = file_get_contents($_FILES['imagen']['tmp_name'] ?? '');
+                $rutaVideo = ''; // Valor predeterminado para evitar null
+                $tipoImg = '';
+                $imagen = '';
+
+                // Procesar la carga de imagen o video
+                if (!empty($_FILES['imagen']['tmp_name'])) {
+                    $tipoImg = $_FILES['imagen']['type'];
+                    $imagen = file_get_contents($_FILES['imagen']['tmp_name']);
+                } elseif (!empty($_FILES['video']['tmp_name'])) {
+                    $videoTmpName = $_FILES['video']['tmp_name'];
+                    $videoOriginalName = $_FILES['video']['name'];
+                    $videoExtension = pathinfo($videoOriginalName, PATHINFO_EXTENSION);
+
+                    // Generar un nombre único para el video
+                    $videoUniqueName = uniqid('video_', true) . '.' . $videoExtension;
+
+                    // Ruta donde se guardará el video
+                    $videoDestination = __DIR__ . '/../views/assets/videos/' . $videoUniqueName;
+
+                    // Mover el archivo a la carpeta de destino
+                    if (move_uploaded_file($videoTmpName, $videoDestination)) {
+                        $rutaVideo =  __DIR__ . 'views\assets\videos\\' . $videoUniqueName; // Ruta relativa para guardar en la base de datos
+                    } else {
+                        echo "Error al guardar el video.";
+                        return;
+                    }
+                }
 
                 if ($idUsuario) {
                     $publicacion = new Publicaciones();
@@ -49,9 +76,8 @@ class CrearpublicacionController
                     $publicacion->setIdUsuario($idUsuario);
                     $publicacion->setCategoria($categoria);
                     $publicacion->setEstatus($estatus);
-                    $publicacion->setFechaCreacion(date('Y-m-d H:i:s'));
                     $publicacion->setContadorLikes($contadorLikes);
-                    $publicacion->setRutaVideo($rutaVideo);
+                    $publicacion->setRutaVideo($rutaVideo); // Ahora siempre será una cadena
                     $publicacion->setTipoImg($tipoImg);
                     $publicacion->setImagen($imagen);
 
@@ -59,7 +85,7 @@ class CrearpublicacionController
                     $resultado = $dao->agregarPublicacion($publicacion);
 
                     if ($resultado) {
-                        header('Location: /publicaciones'); // Redirigir a la lista de publicaciones
+                        header('Location: /home'); // Redirigir a la lista de publicaciones
                         exit;
                     } else {
                         echo "Error al crear la publicación.";

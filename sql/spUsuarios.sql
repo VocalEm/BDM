@@ -1,6 +1,6 @@
 -- Dumping routines for database 'bdm'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `usuario` */;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -10,7 +10,7 @@
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `usuario`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario`(
     IN p_opcion INT,
     IN p_ID_USUARIO INT,
     IN p_NOMBRE VARCHAR(50),

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Middleware;
+use App\Controllers\Daos\PublicacionDao;
 
 class HomeController
 {
@@ -19,6 +20,9 @@ class HomeController
 
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
+
+            $categorias = PublicacionDao::getInstance()->obtenerCategorias();
+
             // Si está autenticado, redirigir a la página de inicio
             require_once __DIR__ . '/../views/home.php';
             exit;
