@@ -13,6 +13,7 @@ require_once __DIR__ . '/plantillas/header.php';
         ?>
         <main class="main_body_index">
             <div class="main_post">
+
                 <div class="post_multimedia">
                     <?php
                     $tipoImg = $publicacion->getTipoImg();
@@ -29,6 +30,7 @@ require_once __DIR__ . '/plantillas/header.php';
                         <p>Contenido multimedia no disponible.</p>
                     <?php } ?>
                 </div>
+
                 <div class="post_datos">
                     <p class="datos_Usu" id="Username" name="Username"><?php
                                                                         echo $usuario->getUsername();
@@ -47,14 +49,13 @@ require_once __DIR__ . '/plantillas/header.php';
                         </button>
                     </div>
                     <div class="section_coments">
-                        <div class="contenido_comentarios">
-                            <a id="name_usuarioCom">jazmin_cch</a>
-                            <p id="comentarios">Arriba Jalen Hurt, mi más UuU</p>
-                        </div>
-
-
-
-
+                        <?php
+                        foreach ($comentarios as $comentario) { ?>
+                            <div class="contenido_comentarios">
+                                <a id="name_usuarioCom"><?php echo $comentario['USERNAME']; ?></a>
+                                <p id="comentarios"><?php echo $comentario['COMENTARIO']; ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
                     <form class="post_coment" action="/publicacion/comentar" method="POST" id="form_comentar">
                         <input type="hidden" id="id_publicacion" name="id_publicacion" value="<?php echo $publicacion->getIdPublicacion(); ?>">
@@ -62,18 +63,9 @@ require_once __DIR__ . '/plantillas/header.php';
                         <input type="submit" class="btn_accion" id="btn_comentar" value="Comentar">
                     </form>
                 </div>
-
             </div>
-
         </main>
     </div>
-
 </body>
 
 </html>
-
-<?php
-/* 
-  
-  */
-?>

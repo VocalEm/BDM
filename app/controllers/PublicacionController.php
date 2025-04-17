@@ -13,7 +13,6 @@ class PublicacionController
     private $middleware;
     private $usuarioDao;
 
-
     public function __construct()
     {
         $this->middleware = Middleware::getInstance();
@@ -73,33 +72,37 @@ class PublicacionController
                 $dataUser['FECHA_REGISTRO'],
                 $dataUser['TIPO_IMG']
             );
+
+            $comentarios = PublicacionDao::GetInstance()->obtenerComentarios($id);
             require_once __DIR__ . '/../views/post.php';
             exit;
         } else {
-            // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
         }
     }
 
     public function comentar()
     {
-        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+        global $usuarioSesion;
 
-        // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
+
             $id_publicacion = $_POST['id_publicacion'];
             $comentario = $_POST['comentario'];
-            $id_usuario = $usuarioSesion->getIdUsuario(); // Obtener el ID del usuario autenticado
-            // Aquí puedes agregar la lógica para guardar el comentario en la base de datos
-            // Por ejemplo, llamar a un método en el modelo o DAO para insertar el comentario
-            // PublicacionDao::GetInstance()->guardarComentario($id_publicacion, $comentario);
-            echo "Comentario guardado con éxito"; // Mensaje de éxito (puedes cambiarlo según tus necesidades)
+            $id_usuario = $usuarioSesion->getIdUsuario();
+
+            $comentario = PublicacionDao::GetInstance()->crearComentario($comentario, $id_publicacion, $id_usuario);
+
+            if ($comentario) {
+                echo "Comentario guardado con éxito";
+                header("Location: /publicacion/post/" . $id_publicacion);
+            } else {
+                echo "Error al guardar el comentario";
+                header("Location: /register");
+            }
         } else {
-            // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
         }
     }
 }
-
-
 //quitar el inncesario de usuario en el render

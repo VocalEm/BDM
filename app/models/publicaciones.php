@@ -18,16 +18,16 @@ class Publicaciones
 
     // Constructor
     public function __construct(
-        int $id_publicacion,
-        string $descripcion,
-        int $id_usuario,
-        string $categoria,
-        int $estatus,
-        string $fecha_creacion,
-        int $contador_likes,
-        string $ruta_video,
-        string $tipo_img,
-        $imagen
+        int $id_publicacion = 0,
+        string $descripcion = '',
+        int $id_usuario = 0,
+        string $categoria = '',
+        int $estatus = 0,
+        string $fecha_creacion = '',
+        int $contador_likes = 0,
+        string $ruta_video = null,
+        string $tipo_img = null,
+        $imagen = null
     ) {
         $this->id_publicacion = $id_publicacion;
         $this->descripcion = $descripcion;

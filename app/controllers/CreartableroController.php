@@ -12,7 +12,6 @@ class CreartableroController
     {
         $this->middleware = Middleware::getInstance();
     }
-    public function index() {}
 
     public function render()
     {

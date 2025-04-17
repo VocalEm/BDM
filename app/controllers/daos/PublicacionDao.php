@@ -177,6 +177,44 @@ class PublicacionDao
         }
     }
 
+    public function crearComentario($descripcion, $idPublicacion, $idUsuario)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_publicacion(
+            :opcion, :idPublicacion, :descripcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+        )");
+
+            $opcion = 8;
+
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idPublicacion', $idPublicacion, \PDO::PARAM_INT);
+            $stmt->bindParam(':descripcion', $descripcion, \PDO::PARAM_STR);
+            $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al agregar publicación: " . $e->getMessage();
+            return false;
+        }
+    } // funcion para crear comentario, posible crear un modelo o crear un dao para comentarios
+
+    public function obtenerComentarios($idPublicacion)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_publicacion(:opcion, :idPublicacion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $opcion = 9; // Opción 9: Obtener comentarios de una publicación
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idPublicacion', $idPublicacion, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener comentarios: " . $e->getMessage();
+            return [];
+        }
+    }
+
     public static function getInstance()
     {
         if (self::$instance == null) {
@@ -184,6 +222,4 @@ class PublicacionDao
         }
         return self::$instance;
     }
-
-    public function CrearComentario() {} // funcion para crear comentario, posible crear un modelo o crear un dao para comentarios
 }

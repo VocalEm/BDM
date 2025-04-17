@@ -4,7 +4,6 @@ require_once __DIR__ . '/plantillas/header.php';
 ?>
 
 <body>
-
     <?php
     require_once __DIR__ . '/plantillas/menu_lateral.php';
     ?>
@@ -57,7 +56,7 @@ require_once __DIR__ . '/plantillas/header.php';
                                 <?php if (!empty($imagen)) { ?>
                                     <img src="data:<?php echo $tipoImg; ?>;base64,<?php echo base64_encode($imagen); ?>" alt="Publicación">
                                 <?php } else if (!empty($rutaVideo) && file_exists(__DIR__ . '/assets/videos/' . basename($rutaVideo))) { ?>
-                                    <video autoplay loop muted>
+                                    <video loop muted>
                                         <source src="/app/views/assets/videos/<?php echo basename($rutaVideo); ?>" type="video/mp4">
                                         Tu navegador no soporta la reproducción de videos.
                                     </video>

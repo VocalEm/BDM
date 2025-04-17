@@ -76,21 +76,26 @@ class CrearpublicacionController
                 }
 
                 if ($idUsuario) {
-                    $publicacion = new Publicaciones();
-                    $publicacion->setDescripcion($descripcion);
-                    $publicacion->setIdUsuario($idUsuario);
-                    $publicacion->setCategoria($categoria);
-                    $publicacion->setEstatus($estatus);
-                    $publicacion->setContadorLikes($contadorLikes);
-                    $publicacion->setRutaVideo($rutaVideo); // Ahora siempre será una cadena
-                    $publicacion->setTipoImg($tipoImg);
-                    $publicacion->setImagen($imagen);
+                    // Crear una nueva instancia de Publicaciones con los datos del formulario
+                    $publicacion = new Publicaciones(
+                        0, // id_publicacion (se generará automáticamente en la base de datos)
+                        $descripcion,
+                        $idUsuario,
+                        $categoria,
+                        $estatus,
+                        date('Y-m-d H:i:s'), // fecha_creacion
+                        $contadorLikes,
+                        $rutaVideo,
+                        $tipoImg,
+                        $imagen
+                    );
 
+                    // Guardar la publicación en la base de datos
                     $dao = PublicacionDao::getInstance();
                     $resultado = $dao->agregarPublicacion($publicacion);
 
                     if ($resultado) {
-                        header('Location: /home'); // Redirigir a la lista de publicaciones
+                        header('Location: /perfil/render/' . $idUsuario); // Redirigir a la lista de publicaciones
                         exit;
                     } else {
                         echo "Error al crear la publicación.";

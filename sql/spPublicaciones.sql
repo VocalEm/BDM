@@ -101,6 +101,29 @@ BEGIN
 			FROM publicaciones
             WHERE ID_USUARIO = p_ID_USUARIO;
             
+		WHEN 8 THEN -- opcion 8 crea un comentario
+			INSERT INTO comentarios
+            (
+                ID_USUARIO, COMENTARIO, ID_PUBLICACION
+            ) VALUES (
+                p_ID_USUARIO, p_DESCRIPCION, p_ID_PUBLICACION
+            );
+            SELECT TRUE AS correcto;
+		
+        WHEN 9 THEN -- opcion 9 crea un comentario
+			SELECT
+				a.ID_COMENTARIO,
+                a.ID_USUARIO,
+                a.COMENTARIO,
+                a.ID_PUBLICACION, 
+                b.FOTO_PERFIL,
+                b.TIPO_IMG,
+                b.USERNAME
+			FROM comentarios a
+            JOIN usuarios b
+            ON a.ID_USUARIO = b.ID_USUARIO
+            WHERE a.ID_PUBLICACION = p_ID_PUBLICACION;
+			
         -- Manejo de error: Opción no válida
         ELSE
             SIGNAL SQLSTATE '45000'
