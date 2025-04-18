@@ -17,36 +17,48 @@ require_once __DIR__ . '/plantillas/header.php';
                 <nav class="main_body_publi_cat">
                     <div class="slider-container">
                         <?php foreach ($categorias as $categoria) { ?>
-                            <a class="icono_cat" href="#"><?php echo $categoria['NOMBRE']; ?></a>
+                            <a class="icono_cat" href="/home/categoria/<?php echo $categoria['NOMBRE']; ?>"><?php echo $categoria['NOMBRE']; ?></a>
                         <?php } ?>
                     </div>
 
                 </nav>
 
-
                 <div class="gallery">
-                    <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte6.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte5.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deportefeed2.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte4.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte1.jpeg" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/basket.png" alt=""></a>
-                    <a href="/publicacion"><img src="/app/views/assets/deporte2.jpeg" alt=""></a>
+                    <?php foreach ($publicaciones as $publicacion) {
+                        $tipoImg = $publicacion['TIPO_IMG'];
+                        $imagen = $publicacion['IMAGEN'];
+                        $rutaVideo = $publicacion['RUTA_VIDEO'];
+                        $idPublicacion = $publicacion['ID_PUBLICACION'];
+                    ?>
+                        <a href="/publicacion/post/<?php echo $idPublicacion; ?>">
+                            <?php if (!empty($imagen)) { ?>
+                                <img src="data:<?php echo $tipoImg; ?>;base64,<?php echo base64_encode($imagen); ?>" alt="Publicación">
+                            <?php } else if (!empty($rutaVideo)) { ?>
+                                <video class="reel-video" autoplay muted>
+                                    <source src="/app/views/assets/videos/<?php echo basename($rutaVideo); ?>" type="video/mp4">
+                                    Tu navegador no soporta la reproducción de videos.
+                                </video>
+                            <?php } ?>
+                        </a>
+                    <?php } ?>
                 </div>
+
+                <script>
+                    // Seleccionar todos los videos con la clase "reel-video"
+                    const videos = document.querySelectorAll('.reel-video');
+
+                    // Tiempo máximo de reproducción en segundos
+                    const maxTime = 1.5; // Cambia este valor si necesitas otro límite
+
+                    videos.forEach(video => {
+                        video.addEventListener('timeupdate', () => {
+                            if (video.currentTime >= maxTime) {
+                                video.currentTime = 0; // Reinicia el video al inicio
+                                video.play(); // Asegura que el video continúe reproduciéndose
+                            }
+                        });
+                    });
+                </script>
 
             </section>
 

@@ -17,6 +17,8 @@ class CrearpublicacionController
 
     public function render()
     {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
             // Si está autenticado, redirigir a la página de inici

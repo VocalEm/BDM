@@ -18,6 +18,9 @@ class Usuarios
     private $privacidad;
     private $tipoImg;
     private $fechaRegistro;
+    private $contadorPublicaciones = 0;
+    private $contadorSeguidores;
+    private $contadorSeguidos;
 
 
     public function __construct(
@@ -32,7 +35,10 @@ class Usuarios
         $password = null,
         $fotoPerfil = null,
         $privacidad = 1,
-        $tipoImg = null
+        $tipoImg = null,
+        $contadorPublicaciones = 0,
+        $contadorSeguidores = 0,
+        $contadorSeguidos = 0
     ) {
         $this->idUsuario = $idUsuario;
         $this->nombre = $nombre;
@@ -156,5 +162,40 @@ class Usuarios
     public function setPrivacidad($privacidad)
     {
         $this->privacidad = $privacidad;
+    }
+
+    public function getFechaRegistro()
+    {
+        return $this->fechaRegistro;
+    }
+    public function setFechaRegistro($fechaRegistro)
+    {
+        $this->fechaRegistro = $fechaRegistro;
+    }
+
+    public function getContadorSeguidores()
+    {
+        return $this->contadorSeguidores;
+    }
+    public function setContadorSeguidores($contadorSeguidores)
+    {
+        $this->contadorSeguidores = $contadorSeguidores;
+    }
+    public function getContadorSeguidos()
+    {
+        return $this->contadorSeguidos;
+    }
+    public function setContadorSeguidos($contadorSeguidos)
+    {
+        $this->contadorSeguidos = $contadorSeguidos;
+    }
+
+    public function getContadorPublicaciones()
+    {
+        return $this->contadorPublicaciones;
+    }
+    public function setContadorPublicaciones($contadorPublicaciones)
+    {
+        $this->contadorPublicaciones = $contadorPublicaciones;
     }
 }

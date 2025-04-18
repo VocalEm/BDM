@@ -1,15 +1,15 @@
-<header class="main_header" style="position: static;">
+<header class="main_header">
     <div class="main_header_elements" style="justify-content: flex-start;">
         <a href="/home" class="main_header_nameapp" style="margin-right: 250px;">
             <h1 class="motion">MOTION</h1>
         </a>
 
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Buscar...">
-            <button class="search-button">
+        <form class="search-container" action="/home/descripcion" method="POST">
+            <input name="searchbar" type="text" class="search-input" placeholder="Buscar...">
+            <button type="submit" class="search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-        </div>
+        </form>
 
 
 

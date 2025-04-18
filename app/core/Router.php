@@ -12,6 +12,9 @@ require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
 require_once __DIR__ . '/../controllers/Daos/PublicacionDao.php';
 require_once __DIR__ . '/../models/Usuarios.php';
 require_once __DIR__ . '/../models/Publicaciones.php';
+require_once __DIR__ . '/../controllers/daos/TablerosDao.php';
+require_once __DIR__ . '/../models/Tableros.php';
+
 
 class Router
 {
@@ -149,6 +152,8 @@ class Router
                 $consulta['FECHA_REGISTRO'],
                 $consulta['TIPO_IMG']
             );
+            $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);
+
             return $usuario;
         } else {
             $this->middleware->cerrarSesion();

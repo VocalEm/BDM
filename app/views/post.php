@@ -40,14 +40,21 @@ require_once __DIR__ . '/plantillas/header.php';
                                                                             echo $publicacion->getDescripcion();
                                                                             ?></p>
 
-                    <div class="actions_post">
-                        <button id="like-button">
-                            <img id="like-icon" src="/app/views/assets/like.png" /><!-- Ícono de like -->
+                    <form class="actions_post" action="/publicacion/interaccion/<?php echo $publicacion->getIdPublicacion() ?>/<?php if ($reacciono) {
+                                                                                                                                    echo "true";
+                                                                                                                                } else {
+                                                                                                                                    echo "false";
+                                                                                                                                } ?>" method="POST" id="form_like">
+                        <button name="like" type="submit" id="like-button">
+                            <p class="conteo-likes"><?php
+                                                    echo $publicacion->getContadorLikes(); // Contador de likes
+                                                    ?></p>
+                            <i class="fa-regular fa-heart fa-2x <?php if ($reacciono) echo "activo" ?>"></i>
                         </button>
                         <button id="save-button">
-                            <img id="save-icon" src="/app/views/assets/save.png" /><!-- Ícono de save -->
+                            <i class="fa-regular fa-bookmark fa-2x"></i>
                         </button>
-                    </div>
+                    </form>
                     <div class="section_coments">
                         <?php
                         foreach ($comentarios as $comentario) { ?>

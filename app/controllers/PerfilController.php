@@ -33,6 +33,7 @@ class PerfilController
                 } else //el perfil a visualizar no es el usuario en sesion
                 {
                     $consulta = $this->usuarioDao->obtenerUsuarioPorId($id);
+
                     if (!$consulta) {
                         header('Location: /home');
                         exit;
@@ -53,6 +54,8 @@ class PerfilController
                         $consulta['FECHA_REGISTRO'],
                         $consulta['TIPO_IMG']
                     );
+
+                    $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);
                 }
                 $publicaciones = PublicacionDao::GetInstance()->obtenerPublicacionUsuario($usuario->getIdUsuario());
             }

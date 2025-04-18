@@ -72,7 +72,7 @@ class PublicacionController
                 $dataUser['FECHA_REGISTRO'],
                 $dataUser['TIPO_IMG']
             );
-
+            $reacciono = PublicacionDao::GetInstance()->usuarioReacciono($id, $usuarioSesion->getIdUsuario());
             $comentarios = PublicacionDao::GetInstance()->obtenerComentarios($id);
             require_once __DIR__ . '/../views/post.php';
             exit;
@@ -99,6 +99,28 @@ class PublicacionController
             } else {
                 echo "Error al guardar el comentario";
                 header("Location: /register");
+            }
+        } else {
+            $this->middleware->cerrarSesion();
+        }
+    }
+
+    public function interaccion($id_publicacion, $isActivo)
+    {
+        global $usuarioSesion;
+
+        if ($this->middleware->autenticarUsuario()) {
+            $id_usuario = $usuarioSesion->getIdUsuario();
+            if ($isActivo == "false") {
+                $respuesta = PublicacionDao::GetInstance()->crearLike($id_publicacion, $id_usuario);
+            } else if ($isActivo == "true") {
+                $respuesta = PublicacionDao::GetInstance()->eliminarLike($id_publicacion, $id_usuario);
+            }
+            if ($respuesta) {
+                echo "Comentario guardado con éxito";
+                header("Location: /publicacion/post/" . $id_publicacion);
+            } else {
+                echo "Error al guardar el comentario";
             }
         } else {
             $this->middleware->cerrarSesion();

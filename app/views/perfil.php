@@ -30,7 +30,9 @@ require_once __DIR__ . '/plantillas/header.php';
                     </div>
 
                     <div class="numeros_usu">
-                        <p class="numeros" id="publicaciones" name="publicaciones">#Publicaciones</p>
+                        <p class="numeros" id="publicaciones" name="publicaciones"> <?php
+                                                                                    echo strval($usuario->getContadorPublicaciones());
+                                                                                    ?> Publicaciones </p>
                         <p class="numeros" id="followers" name="followers">#Seguidores</p>
                         <p class="numeros" id="follows" name="follows">#Seguidos</p>
                     </div>
