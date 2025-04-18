@@ -1,128 +1,173 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_publicacion`(
     IN p_opcion INT,
+    IN p_ID_PUBLICACION INT,
+    IN p_DESCRIPCION VARCHAR(200),
     IN p_ID_USUARIO INT,
-    IN p_NOMBRE VARCHAR(50),
-    IN p_APELLIDO_PATERNO VARCHAR(50),
-    IN p_APELLIDO_MATERNO VARCHAR(50),
-    IN p_CORREO VARCHAR(80),
-    IN p_FECHA_NACIMIENTO DATE,
-    IN p_SEXO TINYINT,
-    IN p_USERNAME VARCHAR(50),
-    IN p_PASSWORD VARCHAR(60),
-    IN p_FOTO_PERFIL LONGBLOB,
-    IN p_PRIVACIDAD TINYINT,
-    IN P_TIPO_IMG VARCHAR(50)
+    IN p_CATEGORIA VARCHAR(50),
+    IN p_ESTATUS TINYINT,
+    IN p_FECHA_CREACION DATETIME,
+    IN p_CONTADOR_LIKES INT,
+    IN p_RUTA_VIDEO VARCHAR(255),
+    IN p_TIPO_IMG VARCHAR(50),
+    IN p_IMAGEN LONGBLOB
 )
 BEGIN
     CASE p_opcion
-        -- Opción 1: Registrar un usuario
+        -- Opción 1: Registrar una publicación
         WHEN 1 THEN
-            -- Validar si el correo ya existe
-            IF EXISTS (
-                SELECT 1 FROM usuarios WHERE CORREO = p_CORREO
-            ) THEN
-                SELECT TRUE AS correo;
-            
-            -- Validar si el nombre de usuario ya existe
-            ELSEIF EXISTS (
-                SELECT 1 FROM usuarios WHERE USERNAME = p_USERNAME
-            ) THEN
-                SELECT TRUE AS username;
+            INSERT INTO publicaciones (
+                DESCRIPCION, ID_USUARIO, CATEGORIA, ESTATUS, FECHA_CREACION, 
+                CONTADOR_LIKES, RUTA_VIDEO, TIPO_IMG, IMAGEN
+            ) VALUES (
+                p_DESCRIPCION, p_ID_USUARIO, p_CATEGORIA, p_ESTATUS, NOW(), 
+                p_CONTADOR_LIKES, p_RUTA_VIDEO, p_TIPO_IMG, p_IMAGEN
+            );
+            SELECT TRUE AS correcto;
 
-            ELSE
-                -- Registrar usuario si no hay conflictos
-                INSERT INTO usuarios (
-                    NOMBRE, APELLIDO_PATERNO, APELLIDO_MATERNO, CORREO, FECHA_NACIMINENTO,
-                    SEXO, USERNAME, `PASSWORD`, FOTO_PERFIL, ESTATUS, PRIVACIDAD, FECHA_REGISTRO,TIPO_IMG
-                ) VALUES (
-                    p_NOMBRE, p_APELLIDO_PATERNO, p_APELLIDO_MATERNO, p_CORREO, p_FECHA_NACIMIENTO,
-                    p_SEXO, p_USERNAME, p_PASSWORD, p_FOTO_PERFIL, 1, p_PRIVACIDAD, NOW(), P_TIPO_IMG
-                );
-                SELECT TRUE AS output;
-            END IF;
-
-
-        -- Opción 2: Desactivar un usuario
+        -- Opción 2: Desactivar una publicación
         WHEN 2 THEN
-            UPDATE usuarios
+            UPDATE publicaciones
             SET ESTATUS = 0
-            WHERE ID_USUARIO = p_ID_USUARIO;
+            WHERE ID_PUBLICACION = p_ID_PUBLICACION;
             SELECT TRUE AS correcto;
 
-        -- Opción 3: Modificar un usuario
-		WHEN 3 THEN
-            UPDATE usuarios
+        -- Opción 3: Modificar una publicación
+        WHEN 3 THEN
+            UPDATE publicaciones
             SET 
-                NOMBRE = p_NOMBRE,
-                APELLIDO_PATERNO = p_APELLIDO_PATERNO,
-                APELLIDO_MATERNO = p_APELLIDO_MATERNO,
-                CORREO = p_CORREO,
-                FECHA_NACIMINENTO = p_FECHA_NACIMIENTO,
-                SEXO = p_SEXO,
-                USERNAME = p_USERNAME,
-                `PASSWORD` = p_PASSWORD,
-                FOTO_PERFIL = p_FOTO_PERFIL,
-                PRIVACIDAD = p_PRIVACIDAD,
-                TIPO_IMG = P_TIPO_IMG
-            WHERE ID_USUARIO = p_ID_USUARIO;
+                DESCRIPCION = p_DESCRIPCION,
+                ID_USUARIO = p_ID_USUARIO,
+                CATEGORIA = p_CATEGORIA,
+                ESTATUS = p_ESTATUS,
+                FECHA_CREACION = p_FECHA_CREACION,
+                CONTADOR_LIKES = p_CONTADOR_LIKES,
+                RUTA_VIDEO = p_RUTA_VIDEO,
+                TIPO_IMG = p_TIPO_IMG,
+                IMAGEN = p_IMAGEN
+            WHERE ID_PUBLICACION = p_ID_PUBLICACION;
             SELECT TRUE AS correcto;
 
-        -- Opción 4: Mostrar un usuario específico
+        -- Opción 4: Mostrar una publicación específica
         WHEN 4 THEN
             SELECT 
+                ID_PUBLICACION,
+                DESCRIPCION,
                 ID_USUARIO,
-                NOMBRE,
-                APELLIDO_PATERNO,
-                APELLIDO_MATERNO,
-                CORREO,
-                FECHA_NACIMINENTO,
-                SEXO,
-                USERNAME,
-                `PASSWORD`,
-                FOTO_PERFIL,
+                CATEGORIA,
                 ESTATUS,
-                PRIVACIDAD,
-                FECHA_REGISTRO,
-				TIPO_IMG,
-                SEGUIDORES,
-                SEGUIDOS,
-                PUBLICACIONES
-            FROM usuarios
-            WHERE ID_USUARIO = p_ID_USUARIO;
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+            FROM publicaciones
+            WHERE ID_PUBLICACION = p_ID_PUBLICACION;
 
-        -- Opción 5: Obtener todos los usuarios
+        -- Opción 5: Obtener todas las publicaciones
         WHEN 5 THEN
             SELECT 
+                ID_PUBLICACION,
+                DESCRIPCION,
                 ID_USUARIO,
-                NOMBRE,
-                APELLIDO_PATERNO,
-                APELLIDO_MATERNO,
-                CORREO,
-                FECHA_NACIMINENTO,
-                SEXO,
-                USERNAME,
-                `PASSWORD`,
-                FOTO_PERFIL,
+                CATEGORIA,
                 ESTATUS,
-                PRIVACIDAD,
-                FECHA_REGISTRO,
-                TIPO_IMG
-            FROM usuarios;
-
-        -- Opción 6: Login - Retornar información del usuario
-        WHEN 6 THEN
-            SELECT 
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+            FROM publicaciones;
+        
+        -- opcion 6 obtener todas las categorias
+		WHEN 6 THEN 
+			SELECT
+            ID_CATEGORIA,
+            NOMBRE
+            FROM categoria;
+		
+        -- opcion 7 obtiene publicaciones de un usuario en especifico
+		WHEN 7 THEN
+			SELECT
+				ID_PUBLICACION,
+                DESCRIPCION,
                 ID_USUARIO,
-                NOMBRE,
-                APELLIDO_PATERNO,
-                APELLIDO_MATERNO,
-                CORREO,
-                `PASSWORD`,
-                USERNAME,
-                ESTATUS
-            FROM usuarios
-            WHERE CORREO = p_CORREO  AND ESTATUS = 1;
-
+                CATEGORIA,
+                ESTATUS,
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+			FROM publicaciones
+            WHERE ID_USUARIO = p_ID_USUARIO;
+            
+		WHEN 8 THEN -- opcion 8 crea un comentario
+			INSERT INTO comentarios
+            (
+                ID_USUARIO, COMENTARIO, ID_PUBLICACION
+            ) VALUES (
+                p_ID_USUARIO, p_DESCRIPCION, p_ID_PUBLICACION
+            );
+            SELECT TRUE AS correcto;
+		
+        WHEN 9 THEN -- opcion 9 crea un comentario
+			SELECT
+				a.ID_COMENTARIO,
+                a.ID_USUARIO,
+                a.COMENTARIO,
+                a.ID_PUBLICACION, 
+                b.FOTO_PERFIL,
+                b.TIPO_IMG,
+                b.USERNAME
+			FROM comentarios a
+            JOIN usuarios b
+            ON a.ID_USUARIO = b.ID_USUARIO
+            WHERE a.ID_PUBLICACION = p_ID_PUBLICACION;
+            
+		WHEN 10 THEN -- crea reaccion
+			INSERT INTO reacciones
+            (ID_USUARIO, ID_PUBLICACION)
+            VALUES(p_ID_USUARIO, p_ID_PUBLICACION);
+            SELECT TRUE AS correcto;
+            
+		WHEN 11 THEN -- SABER SI EL USUARIO YA REACCIONO A LA PUBLICACION
+			SELECT ID_USUARIO, ID_PUBLICACION 
+            FROM reacciones 
+            WHERE ID_USUARIO = p_ID_USUARIO AND ID_PUBLICACION = p_ID_PUBLICACION;
+            
+		WHEN 12 THEN -- elimina la reaccion  si ya la tiene el usuario
+			DELETE FROM reacciones WHERE ID_USUARIO = p_ID_USUARIO AND ID_PUBLICACION = p_ID_PUBLICACION;
+            SELECT TRUE AS correcto;
+            
+		WHEN 13 THEN -- BUSCA POR CATEGORIA
+			 SELECT 
+                ID_PUBLICACION,
+                DESCRIPCION,
+                ID_USUARIO,
+                CATEGORIA,
+                ESTATUS,
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+            FROM publicaciones
+            WHERE CATEGORIA = p_CATEGORIA;
+            
+            WHEN 14 THEN -- BUSCA POR descripcion 
+			 SELECT 
+                ID_PUBLICACION,
+                DESCRIPCION,
+                ID_USUARIO,
+                CATEGORIA,
+                ESTATUS,
+                FECHA_CREACION,
+                CONTADOR_LIKES,
+                RUTA_VIDEO,
+                TIPO_IMG,
+                IMAGEN
+            FROM publicaciones
+            WHERE DESCRIPCION LIKE CONCAT('%', p_DESCRIPCION, '%');
         -- Manejo de error: Opción no válida
         ELSE
             SIGNAL SQLSTATE '45000'
