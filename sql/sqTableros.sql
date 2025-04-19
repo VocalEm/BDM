@@ -70,6 +70,13 @@ CASE p_opcion
             ON a.ID_TABLERO = b.ID_TABLERO
             WHERE a.ID_PUBLICACION = p_ID_PUBLICACION
             AND b.ID_USUARIO = p_ID_USUARIO;
+            
+		WHEN 6 THEN
+			DELETE td
+			FROM tablero_detalle td
+			JOIN tableros t ON td.ID_TABLERO = t.ID_TABLERO
+			WHERE t.ID_USUARIO = p_ID_USUARIO AND td.ID_PUBLICACION = p_ID_PUBLICACION;
+            SELECT TRUE AS correcto;
         
 		ELSE
             SIGNAL SQLSTATE '45000'
