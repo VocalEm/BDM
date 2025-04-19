@@ -36,10 +36,26 @@ require_once __DIR__ . '/plantillas/header.php';
                         <p class="numeros" id="followers" name="followers">#Seguidores</p>
                         <p class="numeros" id="follows" name="follows">#Seguidos</p>
                     </div>
-                    <div class="botones_perfil"> <a class="btn_tablero" id="btn_tablero" href="/tableros/render/<?php
-                                                                                                                echo $usuario->getIdUsuario();
-                                                                                                                ?>">Tableros</a>
-                        <a class="btn_tablero" id="btn_reportes" href="/reportes">Reportes</a>
+                    <div class="botones_perfil">
+                        <a class="btn_tablero" id="btn_tablero" href="/tableros/render/<?php
+                                                                                        echo $usuario->getIdUsuario();
+                                                                                        ?>">Tableros</a>
+                        <?php
+                        if ($usuarioEnSesion) {
+                        ?>
+                            <a class="btn_tablero" id="btn_reportes" href="/reportes">Reportes</a>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (!$usuarioEnSesion) {
+                        ?>
+                            <a class="btn_tablero" id="btn_seguir" href="/seguir/<?php echo $usuario->getIdUsuario(); ?>">Seguir</a>
+                        <?php
+                        }
+                        ?>
+
+
                     </div>
 
                 </div>
