@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\Daos\PublicacionDao;
+use App\Controllers\Daos\TablerosDao;
 use App\Controllers\Daos\UsuarioDao;
 use App\Core\Middleware;
 use App\Models\Usuarios;
@@ -74,6 +75,9 @@ class PublicacionController
             );
             $reacciono = PublicacionDao::GetInstance()->usuarioReacciono($id, $usuarioSesion->getIdUsuario());
             $comentarios = PublicacionDao::GetInstance()->obtenerComentarios($id);
+            $tableros = TablerosDao::GetInstance()->obtenerTablerosPorUsuario($usuarioSesion->getIdUsuario());
+            $isGuardado = TablerosDao::GetInstance()->verificarPublicacionGuardada($id, $usuarioSesion->getIdUsuario());
+
             require_once __DIR__ . '/../views/post.php';
             exit;
         } else {

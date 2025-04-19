@@ -40,21 +40,17 @@ require_once __DIR__ . '/plantillas/header.php';
                                                                             echo $publicacion->getDescripcion();
                                                                             ?></p>
 
-                    <form class="actions_post" action="/publicacion/interaccion/<?php echo $publicacion->getIdPublicacion() ?>/<?php if ($reacciono) {
-                                                                                                                                    echo "true";
-                                                                                                                                } else {
-                                                                                                                                    echo "false";
-                                                                                                                                } ?>" method="POST" id="form_like">
+                    <form class="actions_post" action="/publicacion/interaccion/<?php echo $publicacion->getIdPublicacion(); ?>/<?php echo $reacciono ? 'true' : 'false'; ?>" method="POST" id="form_like">
                         <button name="like" type="submit" id="like-button">
-                            <p class="conteo-likes"><?php
-                                                    echo $publicacion->getContadorLikes(); // Contador de likes
-                                                    ?></p>
-                            <i class="fa-regular fa-heart fa-2x <?php if ($reacciono) echo "activo" ?>"></i>
+                            <p class="conteo-likes"><?php echo $publicacion->getContadorLikes(); ?></p>
+                            <i class="fa-regular fa-heart fa-3x <?php if ($reacciono) echo 'activo'; ?>"></i>
                         </button>
-                        <button id="save-button">
-                            <i class="fa-regular fa-bookmark fa-2x"></i>
-                        </button>
+                        <a id="save-button" <?php if ($isGuardado) echo ('href="' . '/tableros/eliminar/' . $publicacion->getIdPublicacion() . '/' . $usuario->getIdUsuario() . '""'); ?>>
+                            <i id="saveIcon" class="fa-regular fa-bookmark fa-2x <?php if ($isGuardado) echo 'guardado' ?>"></i>
+                        </a>
                     </form>
+
+
                     <div class="section_coments">
                         <?php
                         foreach ($comentarios as $comentario) { ?>
@@ -73,6 +69,25 @@ require_once __DIR__ . '/plantillas/header.php';
             </div>
         </main>
     </div>
+    <!-- Ventana emergente -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button class="close-button" aria-label="Cerrar ventana emergente">&times;</button>
+            <h2>Selecciona un tablero</h2>
+            <ul>
+                <?php
+                foreach ($tableros as $tablero) { ?>
+                    <a href="/tableros/guardar/<?php echo $tablero['ID_TABLERO'] ?>/<?php echo $publicacion->getIdPublicacion() ?>">
+                        <li class="tablero-item">
+                            <img src="data:<?php echo $tablero['TIPO_IMG']; ?>;base64,<?php echo base64_encode($tablero['PORTADA']); ?>" alt="">
+                            <h3><?php echo $tablero['TITULO']; ?></h3>
+                        </li>
+                    </a>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+    <script src="/app/views/js/popup.js"></script>
 </body>
 
 </html>

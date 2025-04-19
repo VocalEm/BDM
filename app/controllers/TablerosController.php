@@ -6,6 +6,7 @@ use App\Controllers\Daos\UsuarioDao;
 use App\Core\Middleware;
 use App\Models\Tableros;
 use App\Controllers\Daos\TablerosDao;
+use App\Models\Publicaciones;
 
 
 require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
@@ -21,14 +22,14 @@ class TablerosController
         $this->usuarioDao = new UsuarioDao();
     }
 
-    public function render()
+    public function render($id_usuario)
     {
         global $usuarioSesion; // Asegurarse de que la variable global esté disponible
 
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
             // Recuperar los datos de los tableros desde la base de datos
-            $tablerosData = TablerosDao::getInstance()->obtenerTablerosPorUsuario($usuarioSesion->getIdUsuario());
+            $tablerosData = TablerosDao::getInstance()->obtenerTablerosPorUsuario($id_usuario);
 
             // Pasar los datos directamente a la vista
             require_once __DIR__ . '/../views/tableros.php';
@@ -40,11 +41,29 @@ class TablerosController
     }
 
 
-    public function detalle($id)
+    public function detalle($id_tablero)
     {
         // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
             // Si está autenticado, redirigir a la página de inici
+
+            $tableroData = TablerosDao::getInstance()->obtenerPublicacionesDeTablero($id_tablero);
+
+            foreach ($tableroData as $data) {
+                $publicaciones[] = new Publicaciones(
+                    $data['ID_PUBLICACION'],
+                    $data['DESCRIPCION'],
+                    $data['ID_USUARIO'],
+                    $data['CATEGORIA'],
+                    $data['ESTATUS'],
+                    $data['FECHA_CREACION'],
+                    $data['CONTADOR_LIKES'],
+                    $data['RUTA_VIDEO'],
+                    $data['TIPO_IMG'],
+                    $data['IMAGEN']
+                );
+            }
+
             require_once __DIR__ . '/../views/tablerosdetalle.php';
             exit;
         } else {
@@ -113,6 +132,46 @@ class TablerosController
                 }
             } else {
                 echo "Método no permitido.";
+            }
+        } else {
+            // Redirigir a la página de inicio de sesión si no está autenticado
+            $this->middleware->cerrarSesion();
+        }
+    }
+
+    public function guardar($id_tablero, $id_publicacion)
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        if ($this->middleware->autenticarUsuario()) {
+            // Guardar la publicación en el tablero
+            $resultado = TablerosDao::getInstance()->guardarPublicacionEnTablero($id_tablero, $id_publicacion);
+
+            if ($resultado) {
+                header('Location: /publicacion/post/' . $id_publicacion); // Redirigir al perfil del usuario
+                exit;
+            } else {
+                echo "Error al guardar la publicación en el tablero.";
+            }
+        } else {
+            // Redirigir a la página de inicio de sesión si no está autenticado
+            $this->middleware->cerrarSesion();
+        }
+    }
+
+    public function eliminar($id_publicacion, $id_usuario)
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        if ($this->middleware->autenticarUsuario()) {
+            // Eliminar la publicación del tablero
+            $resultado = TablerosDao::getInstance()->eliminarPublicacionDeTablero($id_usuario, $id_publicacion);
+
+            if ($resultado) {
+                header('Location: /publicacion/post/' . $id_publicacion);
+                exit;
+            } else {
+                echo "Error al eliminar la publicación del tablero.";
             }
         } else {
             // Redirigir a la página de inicio de sesión si no está autenticado

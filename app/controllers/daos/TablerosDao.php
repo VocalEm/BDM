@@ -131,6 +131,27 @@ class TablerosDao
         }
     }
 
+    public function eliminarPublicacionDeTablero(int $id_usuario, int $id_publicacion)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_tablero(
+                :opcion, NULL, NULL, :id_usuario, NULL, :id_publicacion, NULL, NULL
+            )");
+
+            $opcion = 6; // Opción 6: Eliminar publicación de tablero
+
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':id_usuario', $id_usuario, \PDO::PARAM_INT);
+            $stmt->bindParam(':id_publicacion', $id_publicacion, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al eliminar publicación de tablero: " . $e->getMessage();
+            return false;
+        }
+    }
+
     // Singleton para obtener la instancia de TablerosDao
     public static function getInstance()
     {

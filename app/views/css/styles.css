@@ -565,6 +565,8 @@ a {
   overflow: hidden;
   aspect-ratio: 1 / 1; /* Mantener las publicaciones cuadradas */
   border-radius: 15px;
+  min-width: 25rem;
+  min-height: 25rem;
 }
 
 .publicacion img {
@@ -1187,4 +1189,134 @@ a {
 
 .activo {
   color: red;
+}
+
+/* Estilos para la ventana emergente */
+.popup {
+  display: none; /* Oculta la ventana por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 3rem;
+  max-height: 50vh; /* Limita la altura máxima al 80% del viewport */
+  overflow-y: auto; /* Habilita el scroll vertical si el contenido excede la altura */
+}
+
+/* Personalización de la barra de desplazamiento */
+.popup-content::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+  background-color: var(--color-4); /* Color del "pulgar" de la barra */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+.popup-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-3); /* Color al pasar el mouse */
+}
+
+.popup-content::-webkit-scrollbar-track {
+  background-color: var(--color-1); /* Color del fondo de la barra */
+  border-radius: 10px;
+}
+
+.popup-content h2 {
+  font-family: var(--font--2);
+  color: var(--color-1);
+  margin-bottom: 20px;
+  color: var(--color-4);
+}
+
+.popup-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.popup-content ul li {
+  font-family: var(--font--2);
+  color: var(--color-1);
+  padding: 10px;
+  border: 1px solid var(--color-4);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.popup-content ul li:hover {
+  background-color: var(--color-4);
+  color: black;
+}
+
+.close-button {
+  position: absolute;
+  top: 1px; /* Espaciado desde la parte superior del popup-content */
+  right: 1px; /* Espaciado desde la parte derecha del popup-content */
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  background-color: #e60000;
+  width: 5rem;
+  height: 5rem;
+  border: none; /* Elimina el borde predeterminado del botón */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 10; /* Asegura que el botón esté por encima del contenido */
+  margin-right: 65rem;
+  margin-top: 25rem;
+}
+
+.close-button:hover {
+  background-color: #ff4d4d; /* Cambia a un rojo más claro al pasar el mouse */
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+}
+
+.close-button:focus {
+  outline: none; /* Elimina el contorno predeterminado al enfocar */
+  box-shadow: 0 0 5px 2px rgba(255, 77, 77, 0.8); /* Agrega un efecto de enfoque */
+}
+
+.tablero-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tablero-item h3 {
+  background: transparent;
+  font-size: 3rem;
+}
+
+.tablero-item img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.guardado {
+  color: var(--color-4);
 }

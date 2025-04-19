@@ -20,7 +20,7 @@ require_once __DIR__ . '/plantillas/header.php';
                     <?php
                     foreach ($tablerosData as $tablero) {
                     ?>
-                        <a class="tableros" href="/tableros/detalle/<?php echo htmlspecialchars($tablero['ID_TABLERO']); ?>">
+                        <a class="tableros" href="/tableros/detalle/<?php echo $tablero['ID_TABLERO']; ?>">
                             <img
                                 src="data:<?php echo htmlspecialchars($tablero['TIPO_IMG']); ?>;base64,<?php echo base64_encode($tablero['PORTADA']); ?>"
                                 alt="<?php echo htmlspecialchars($tablero['TITULO']); ?>">

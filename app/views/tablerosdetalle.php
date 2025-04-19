@@ -18,34 +18,30 @@ require_once __DIR__ . '/plantillas/header.php';
 
             <div class="pageUsu_publics">
                 <div class="publicaciones-grid">
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/golf.png" alt="Publicación 1">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/natacion2.png" alt="Publicación 2">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/basket.png" alt="Publicación 3">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/bici.png" alt="Publicación 4">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/esgrima.png" alt="Publicación 5">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/running.png" alt="Publicación 6">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/soccer.png" alt="Publicación 7">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/run.png" alt="Publicación 8">
-                    </a>
-                    <a class="tableros" href="/publicacion">
-                        <img src="/app/views/assets/tennis.png" alt="Publicación 9">
-                    </a>
-                    <!-- Añade más publicaciones según sea necesario -->
+                    <?php
+                    foreach ($publicaciones as $publicacion) {
+                        $tipoImg = $publicacion->getTipoImg();
+                        $imagen = $publicacion->getImagen();
+                        $rutaVideo = $publicacion->getRutaVideo();
+                        $descripcion = $publicacion->getDescripcion();
+                        $idPublicacion = $publicacion->getIdPublicacion();
+                    ?>
+                        <div class="publicacion">
+                            <a href="/publicacion/post/<?php echo $idPublicacion; ?>">
+                                <?php if (!empty($imagen)) { ?>
+                                    <img src="data:<?php echo htmlspecialchars($tipoImg); ?>;base64,<?php echo base64_encode($imagen); ?>" alt="<?php echo htmlspecialchars($descripcion); ?>">
+                                <?php } else if (!empty($rutaVideo) && file_exists(__DIR__ . '/assets/videos/' . basename($rutaVideo))) { ?>
+                                    <video loop muted>
+                                        <source src="/app/views/assets/videos/<?php echo basename($rutaVideo); ?>" type="video/mp4">
+                                        Tu navegador no soporta la reproducción de videos.
+                                    </video>
+                                <?php } else { ?>
+                                    <p>Contenido multimedia no disponible.</p>
+                                <?php } ?>
+                            </a>
+                            <p class="titulo-publicacion"><?php echo htmlspecialchars($descripcion); ?></p>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
