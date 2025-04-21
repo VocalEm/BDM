@@ -52,6 +52,9 @@ class Middleware
 
     function cerrarSesion()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Inicia la sesión si no está activa
+        }
         session_unset(); // Eliminar todas las variables de sesión
         session_destroy(); // Destruir la sesión
 
@@ -60,8 +63,6 @@ class Middleware
             // Configurar la cookie con parámetros más específicos y un tiempo pasado
             setcookie('id_user', '', time() - 3600, "/", "", false, true);
         }
-
-        $this->redirigir('/login'); // Redirigir al inicio de sesión
     }
     function verificarCookie()
     {
@@ -74,6 +75,10 @@ class Middleware
 
     function login($recordarSesion, $id)
     {
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start(); // Inicia la sesión si no está activa
+        }
         if (!isset($id) || empty($id)) {
             return false; // No se puede iniciar sesión sin un ID válido
         }

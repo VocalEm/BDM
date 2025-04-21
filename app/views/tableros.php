@@ -12,7 +12,14 @@ require_once __DIR__ . '/plantillas/header.php';
         <div class="main_body_pageTab" style="margin-left: 120px;">
             <div class="tablero"> <!-- Divisor de la página del Tablero-->
                 <h1 class="titulo_tablero">Tableros</h1>
-                <a href="/tableros/crear" class="btn_accion">Crear Tablero</a>
+                <?php
+                if ($usuarioEnSesion) {
+                ?>
+                    <a href="/tableros/crear" class="btn_accion">Crear Tablero</a>
+                <?php
+                }
+                ?>
+
             </div>
 
             <div class="pageUsu_publics">

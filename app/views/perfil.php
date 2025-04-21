@@ -37,25 +37,69 @@ require_once __DIR__ . '/plantillas/header.php';
                         <p class="numeros" id="follows" name="follows">#Seguidos</p>
                     </div>
                     <div class="botones_perfil">
-                        <a class="btn_tablero" id="btn_tablero" href="/tableros/render/<?php
-                                                                                        echo $usuario->getIdUsuario();
-                                                                                        ?>">Tableros</a>
+
                         <?php
+                        if ($usuario->getPrivacidad() == 1 || $usuarioEnSesion) {
+                        ?>
+                            <a class="btn_tablero" id="btn_tablero" href="/tableros/render/<?php
+                                                                                            echo $usuario->getIdUsuario();
+                                                                                            ?>">Tableros</a>
+                        <?php
+                        }
+                        ?>
+
+                        <?php //MOSTRAR BOTON DE REPORTES
                         if ($usuarioEnSesion) {
                         ?>
                             <a class="btn_tablero" id="btn_reportes" href="/reportes">Reportes</a>
                         <?php
                         }
                         ?>
+
                         <?php
                         if (!$usuarioEnSesion) {
+                            if ($usuario->getPrivacidad() == 1) {
                         ?>
-                            <a class="btn_tablero" id="btn_seguir" href="/seguir/<?php echo $usuario->getIdUsuario(); ?>">Seguir</a>
+                                <a class="btn_tablero <?php if ($isSeguido == 1) echo "seguido" ?>" id="btn_seguir"
+                                    href="/perfil/seguir/<?php echo ($usuario->getIdUsuario()); ?>/<?php echo $isSeguido; ?>">
+                                    <?php if ($isSeguido == 1) {
+                                        echo "Dejar de seguir";
+                                    } else if ($isSeguido == 0) {
+                                        echo "Seguir";
+                                    }
+                                    ?></a>
+                            <?php
+                            } else {
+                            ?>
+                                <?php
+                                if (isset($isSolicitud)) {
+                                ?>
+
+                                    <a class="btn_tablero <?php if ($isSolicitud == 1) echo "seguido" ?>" id="btn_seguir"
+                                        href="/perfil/crearsolicitud/<?php echo ($usuario->getIdUsuario()); ?>/<?php echo $isSolicitud; ?>">
+                                        <?php if ($isSolicitud == 1) {
+                                            echo "Solicitud enviada";
+                                        } else if ($isSolicitud == 0) {
+                                            echo "Enviar solicitud";
+                                        }
+                                        ?></a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a class="btn_tablero <?php if ($isSeguido == 1) echo "seguido" ?>" id="btn_seguir"
+                                        href="/perfil/seguir/<?php echo ($usuario->getIdUsuario()); ?>/<?php echo $isSeguido; ?>">
+                                        <?php if ($isSeguido == 1) {
+                                            echo "Dejar de seguir";
+                                        } else if ($isSeguido == 0) {
+                                            echo "Seguir";
+                                        }
+                                        ?></a>
                         <?php
+
+                                }
+                            }
                         }
                         ?>
-
-
                     </div>
 
                 </div>

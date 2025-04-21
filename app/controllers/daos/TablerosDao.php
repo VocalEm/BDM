@@ -152,6 +152,26 @@ class TablerosDao
         }
     }
 
+    public function obtenerTableroPorId(int $id_tablero)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_tablero(
+                :opcion, :id_tablero, NULL, NULL, NULL, NULL, NULL, NULL
+            )");
+
+            $opcion = 7; // Opción 7: Obtener tablero por ID
+
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':id_tablero', $id_tablero, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener tablero por ID: " . $e->getMessage();
+            return false;
+        }
+    }
+
     // Singleton para obtener la instancia de TablerosDao
     public static function getInstance()
     {

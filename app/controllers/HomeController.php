@@ -29,6 +29,7 @@ class HomeController
         } else {
             // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
+            Header('Location: /login'); // Redirigir a la página de inicio de sesión
         }
     }
 
@@ -65,5 +66,11 @@ class HomeController
             // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
         }
+    }
+
+    public function cerrarSesion()
+    {
+        $this->middleware->cerrarSesion();
+        Header('Location: /login'); // Redirigir a la página de inicio de sesión
     }
 }

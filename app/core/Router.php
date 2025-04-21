@@ -147,9 +147,7 @@ class Router
                 $consulta['USERNAME'],
                 $consulta['PASSWORD'],
                 $consulta['FOTO_PERFIL'],
-                $consulta['ESTATUS'],
                 $consulta['PRIVACIDAD'],
-                $consulta['FECHA_REGISTRO'],
                 $consulta['TIPO_IMG']
             );
             $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);

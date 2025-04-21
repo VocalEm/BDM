@@ -32,6 +32,7 @@ class PerfilController
                     $usuario = $usuarioSesion;
                 } else //el perfil a visualizar no es el usuario en sesion
                 {
+                    $usuarioEnSesion = false; // el perfil a visulizar no es  el usuario en sesion
                     $consulta = $this->usuarioDao->obtenerUsuarioPorId($id);
 
                     if (!$consulta) {
@@ -49,13 +50,31 @@ class PerfilController
                         $consulta['USERNAME'],
                         $consulta['PASSWORD'],
                         $consulta['FOTO_PERFIL'],
-                        $consulta['ESTATUS'],
                         $consulta['PRIVACIDAD'],
-                        $consulta['FECHA_REGISTRO'],
                         $consulta['TIPO_IMG']
                     );
 
-                    $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);
+                    $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);;
+                    if ($usuario->getPrivacidad() == 1) {
+                        $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
+                        if ($dataSeguidos) {
+                            $isSeguido = 1; //si lo sigue
+                        } else {
+                            $isSeguido = 0; //no lo sigue
+                        }
+                    } else {
+                        $dataSolicitudes = $this->usuarioDao->verificarSolicitud($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
+                        if ($dataSolicitudes) {
+                            $isSolicitud = 1;
+                        } else {
+                            $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
+                            if ($dataSeguidos) {
+                                $isSeguido = 1; //si lo sigue
+                            } else {
+                                $isSolicitud = 0;
+                            }
+                        }
+                    }
                 }
                 $publicaciones = PublicacionDao::GetInstance()->obtenerPublicacionUsuario($usuario->getIdUsuario());
             }
@@ -63,6 +82,72 @@ class PerfilController
         } else {
             // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
+        }
+    }
+
+    public function seguir($id_usuario_seguir, $isSeguido)
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        if ($this->middleware->autenticarUsuario()) {
+            if ($isSeguido == 0) {
+                if (isset($usuarioSesion)) {
+                    $this->usuarioDao->seguirUsuario($usuarioSesion->getIdUsuario(), $id_usuario_seguir);
+                    header('Location: /perfil/render/' . $id_usuario_seguir);
+                    exit;
+                } else {
+                    // Si no está autenticado, redirigir a la página de inicio de sesión
+                    $this->middleware->cerrarSesion();
+                    Header('Location: /login');
+                    exit;
+                }
+            } else if ($isSeguido == 1) {
+                if (isset($usuarioSesion)) {
+                    $this->usuarioDao->dejarSeguirUsuario($usuarioSesion->getIdUsuario(), $id_usuario_seguir);
+                    header('Location: /perfil/render/' . $id_usuario_seguir);
+                    exit;
+                } else {
+                    // Si no está autenticado, redirigir a la página de inicio de sesión
+                    $this->middleware->cerrarSesion();
+                }
+            }
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
+            Header('Location: /login');
+            exit;
+        }
+    }
+
+    public function crearSolicitud($id_usuario_seguir, $isSolicitud)
+    {
+        global $usuarioSesion; // Asegurarse de que la variable global esté disponible
+
+        if ($this->middleware->autenticarUsuario()) {
+            if ($isSolicitud == 0) {
+                if (isset($usuarioSesion)) {
+                    $this->usuarioDao->crearsolicitud($usuarioSesion->getIdUsuario(), $id_usuario_seguir);
+                    header('Location: /perfil/render/' . $id_usuario_seguir);
+                    exit;
+                } else {
+                    // Si no está autenticado, redirigir a la página de inicio de sesión
+                    $this->middleware->cerrarSesion();
+                }
+            } else if ($isSolicitud == 1) {
+                if (isset($usuarioSesion)) {
+                    $this->usuarioDao->dejarSeguirUsuario($usuarioSesion->getIdUsuario(), $id_usuario_seguir);
+                    header('Location: /perfil/render/' . $id_usuario_seguir);
+                    exit;
+                } else {
+                    // Si no está autenticado, redirigir a la página de inicio de sesión
+                    $this->middleware->cerrarSesion();
+                }
+            }
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
+            Header('Location: /login');
+            exit;
         }
     }
 }

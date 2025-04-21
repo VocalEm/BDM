@@ -32,9 +32,13 @@ require_once __DIR__ . '/plantillas/header.php';
                 </div>
 
                 <div class="post_datos">
-                    <p class="datos_Usu" id="Username" name="Username"><?php
-                                                                        echo $usuario->getUsername();
-                                                                        ?></p>
+                    <a href="/perfil/render/<?php echo $usuario->getIdUsuario(); ?>" class="datos_usuario">
+                        <img src="data:<?php echo $usuario->getTipoImg(); ?>;base64,<?php echo base64_encode($usuario->getFotoPerfil()); ?>" alt="Foto de perfil">
+                        <p class="datos_Usu" id="Username" name="Username"><?php
+                                                                            echo $usuario->getUsername();
+                                                                            ?></p>
+                    </a>
+
 
                     <p class="comentario_post" id="compost" name="compost"><?php
                                                                             echo $publicacion->getDescripcion();

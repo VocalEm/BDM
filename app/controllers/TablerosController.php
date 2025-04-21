@@ -8,9 +8,9 @@ use App\Models\Tableros;
 use App\Controllers\Daos\TablerosDao;
 use App\Models\Publicaciones;
 
-
 require_once __DIR__ . '/../controllers/Daos/UsuarioDao.php';
 require_once __DIR__ . '/../models/Usuarios.php';
+
 class TablerosController
 {
     private $middleware;
@@ -25,21 +25,40 @@ class TablerosController
     public function render($id_usuario)
     {
         global $usuarioSesion; // Asegurarse de que la variable global esté disponible
-
-        // Verificar si el usuario está autenticado
         if ($this->middleware->autenticarUsuario()) {
-            // Recuperar los datos de los tableros desde la base de datos
-            $tablerosData = TablerosDao::getInstance()->obtenerTablerosPorUsuario($id_usuario);
-
-            // Pasar los datos directamente a la vista
-            require_once __DIR__ . '/../views/tableros.php';
-            exit;
+            $usuario = $this->usuarioDao->obtenerUsuarioPorId($id_usuario);
+            $loSigues = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $id_usuario);
+            if ($usuario['PRIVACIDAD'] == 1) {
+                $tablerosData = TablerosDao::getInstance()->obtenerTablerosPorUsuario($id_usuario);
+                if (isset($usuarioSesion)) {
+                    if ($id_usuario == $usuarioSesion->getIdUsuario()) // el perfil a visulizar es  el usuario en sesion
+                        $usuarioEnSesion = true; // el perfil a visulizar es  el usuario en sesion
+                    else //el perfil a visualizar no es el usuario en sesion
+                        $usuarioEnSesion = false; // el perfil a visulizar no es  el usuario en sesion
+                }
+                // Pasar los datos directamente a la vista
+                require_once __DIR__ . '/../views/tableros.php';
+                exit;
+            } else {
+                if ($loSigues) {
+                    $tablerosData = TablerosDao::getInstance()->obtenerTablerosPorUsuario($id_usuario);
+                    if (isset($usuarioSesion)) {
+                        if ($id_usuario == $usuarioSesion->getIdUsuario()) // el perfil a visulizar es  el usuario en sesion
+                            $usuarioEnSesion = true; // el perfil a visulizar es  el usuario en sesion
+                        else //el perfil a visualizar no es el usuario en sesion
+                            $usuarioEnSesion = false; // el perfil a visulizar no es  el usuario en sesion
+                    }
+                    // Pasar los datos directamente a la vista
+                    require_once __DIR__ . '/../views/tableros.php';
+                    exit;
+                } else {
+                    header('Location: /perfil/render/' . $id_usuario); // Redirigir al perfil del usuario
+                }
+            }
         } else {
-            // Si no está autenticado, redirigir a la página de inicio de sesión
             $this->middleware->cerrarSesion();
         }
     }
-
 
     public function detalle($id_tablero)
     {
@@ -48,6 +67,7 @@ class TablerosController
             // Si está autenticado, redirigir a la página de inici
 
             $tableroData = TablerosDao::getInstance()->obtenerPublicacionesDeTablero($id_tablero);
+            $tablero = TablerosDao::getInstance()->obtenerTableroPorId($id_tablero);
 
             foreach ($tableroData as $data) {
                 $publicaciones[] = new Publicaciones(

@@ -35,7 +35,7 @@ global $usuarioSesion;
                     alt="Imagen por defecto" />
             <?php endif; ?>
         </a>
-        <a class="icono_bl">
+        <a class="icono_bl" href="/home/cerrarSesion">
             <i class="fa-solid fa-right-from-bracket fa-6x"></i>
         </a>
     </nav>

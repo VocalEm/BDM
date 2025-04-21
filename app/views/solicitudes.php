@@ -25,80 +25,25 @@ require_once __DIR__ . '/plantillas/head.php';
 
                     <!-- User requests list -->
                     <div class="requests-grid">
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 1</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 2</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 3</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
+                        <?php
 
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 1</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
+                        foreach ($dataSolicitudes as $solicitud) {
+                            $usuario = $this->usuarioDao->obtenerUsuarioPorId($solicitud['ID_USUARIO']);
+                        ?>
+                            <div class="tarjeta-userRep">
+                                <img src="data:<?php echo $usuario['TIPO_IMG']; ?>;base64,<?php echo base64_encode($usuario['FOTO_PERFIL']); ?>" alt="Foto de perfil">
+                                <p id="name_user" name="name_user"><?php
+                                                                    echo $usuario['USERNAME'];
+                                                                    ?></p>
+                                </p>
+                                <div class="action-buttons">
+                                    <a href="/solicitudes/aceptar/<?php echo $usuario["ID_USUARIO"]; ?>" class="btn_accept">Aceptar</a>
+                                    <a href="/solicitudes/rechazar/<?php echo $usuario["ID_USUARIO"]; ?>" class="btn_reject">Rechazar</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 2</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 3</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 1</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 2</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <div class="tarjeta-userRep">
-                            <img src="/app/views/assets/emi3.jpg" alt="Foto de perfil">
-                            <p id="name_user" name="name_user">Usuario 3</p>
-                            <div class="action-buttons">
-                                <button class="btn_accept">Aceptar</button>
-                                <button class="btn_reject">Rechazar</button>
-                            </div>
-                        </div>
-                        <!-- Add more user cards as needed -->
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

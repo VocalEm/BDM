@@ -21,7 +21,7 @@ class UsuarioDao
         try {
             $stmt = $this->conexion->prepare("CALL sp_usuario(
                 :opcion, NULL, :nombre, :apellidoPaterno, :apellidoMaterno, 
-                :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg
+                :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg, NULL
             )");
 
             $opcion = 1; // Opción 1: Registrar un usuario
@@ -51,14 +51,12 @@ class UsuarioDao
 
             $stmt->execute();
 
-            // Capturar el resultado del SELECT TRUE AS correcto
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if ($resultado['correo'] == true) {
                 return "correo";
-            } // Correo ya existe
-            else if ($resultado['output'] == true) {
-                return "correcto"; // Operación exitosa
+            } else if ($resultado['output'] == true) {
+                return "correcto";
             }
         } catch (\PDOException $e) {
             echo "Error al agregar usuario: " . $e->getMessage();
@@ -72,12 +70,11 @@ class UsuarioDao
         try {
             $stmt = $this->conexion->prepare("CALL sp_usuario(
                 :opcion, :idUsuario, :nombre, :apellidoPaterno, :apellidoMaterno, 
-                :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg
+                :correo, :fechaNacimiento, :sexo, :username, :password, :fotoPerfil, :privacidad, :tipoImg, NULL
             )");
 
-            $opcion = 3; // Opción 3: Modificar un usuario
+            $opcion = 3;
 
-            // Vincular los parámetros
             $idUsuario = $usuario->getIdUsuario();
             $nombre = $usuario->getNombre();
             $apellidoPaterno = $usuario->getApellidoPaterno();
@@ -91,7 +88,6 @@ class UsuarioDao
             $privacidad = $usuario->getPrivacidad();
             $tipoImg = $usuario->getTipoImg();
 
-            // Vincular los parámetros
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
             $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
             $stmt->bindParam(':nombre', $nombre, \PDO::PARAM_STR);
@@ -108,13 +104,12 @@ class UsuarioDao
 
             $stmt->execute();
 
-            // Capturar el resultado del SELECT TRUE AS correcto
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if ($resultado && $resultado['correcto'] == true) {
-                return true; // Operación exitosa
+                return true;
             } else {
-                return false; // Algo salió mal
+                return false;
             }
         } catch (\PDOException $e) {
             echo "Error al modificar usuario: " . $e->getMessage();
@@ -126,9 +121,9 @@ class UsuarioDao
     public function eliminarUsuario($idUsuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
-            $opcion = 2; // Opción 2: Desactivar un usuario
+            $opcion = 2;
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
             $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
 
@@ -142,9 +137,9 @@ class UsuarioDao
     public function obtenerUsuarioPorId($idUsuario)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
-            $opcion = 4; // Opción 4: Mostrar un usuario
+            $opcion = 4;
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
             $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
 
@@ -160,10 +155,9 @@ class UsuarioDao
     public function obtenerUsuarios()
     {
         try {
-            // Llamada al procedimiento almacenado con la opción 5
-            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
-            $opcion = 5; // Opción 5: Obtener todos los usuarios
+            $opcion = 5;
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
 
             $stmt->execute();
@@ -178,9 +172,9 @@ class UsuarioDao
     public function login($correo)
     {
         try {
-            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, NULL, NULL, NULL, NULL, :correo, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
 
-            $opcion = 6; // Opción 6: Login
+            $opcion = 6;
             $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
             $stmt->bindParam(':correo', $correo, \PDO::PARAM_STR);
 
@@ -189,13 +183,194 @@ class UsuarioDao
             if (!$resultado) {
                 return false;
             } else {
-                return $resultado; // Retorna el usuario encontrado
+                return $resultado;
             }
         } catch (\PDOException $e) {
             echo "Error al iniciar sesión: " . $e->getMessage();
             return false;
         }
     }
+
+    // Seguir a un usuario
+    public function seguirUsuario($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 7;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al seguir usuario: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Dejar de seguir a un usuario
+    public function dejarSeguirUsuario($idSeguidor, $idSeguido) //tambien sirve para eliminar una solicitud
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 8;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al dejar de seguir usuario: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function verificarSeguir($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 9;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al verificar seguir: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function verificarSolicitud($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 10;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al verificar solicitud: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function crearSolicitud($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 11;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al crear solicitud: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function aceptarSolicitud($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 12;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al aceptar solicitud: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function obtenerSolicitudes($idUsuario)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+
+            $opcion = 13;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener solicitudes: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function obtenerSeguidores($idUsuario)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+
+            $opcion = 14;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener solicitudes: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function obtenerSeguidos($idUsuario)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idUsuario, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)");
+
+            $opcion = 15;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al obtener solicitudes: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+    public function rechazarSolicitud($idSeguidor, $idSeguido)
+    {
+        try {
+            $stmt = $this->conexion->prepare("CALL sp_usuario(:opcion, :idSeguidor, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, :idSeguido)");
+
+            $opcion = 16;
+            $stmt->bindParam(':opcion', $opcion, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguidor', $idSeguidor, \PDO::PARAM_INT);
+            $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
+
+            $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            echo "Error al rechazar solicitud: " . $e->getMessage();
+            return false;
+        }
+    }
+
 
     public static function getInstance()
     {

@@ -20,28 +20,26 @@ require_once __DIR__ . '/plantillas/header.php';
 
                 <!-- Buttons for toggling lists -->
                 <div class="toggle-buttons">
-                    <button class="toggle-button active">Lista de Seguidores</button>
-                    <button class="toggle-button">Lista de Seguidos</button>
+                    <a href="/reportes" class="toggle-button <?php if (!$seguidosActivo) echo "active" ?>">Lista de Seguidores</a>
+                    <a href="/reportes/seguidos" class="toggle-button <?php if ($seguidosActivo) echo "active" ?>">Lista de Seguidos</a>
                 </div>
 
                 <!-- Followers list -->
                 <div class="followers-grid">
-                    <div class="tarjeta-userRep">
-                        <img src="/app/views/assets/emi3.jpg" alt="">
-                        <p id="name_follower" name="name_follower">Emiliano Frias Felix</p>
-                    </div>
-                    <div class="tarjeta-userRep">
-                        <img src="/app/views/assets/emi3.jpg" alt="">
-                        <p id="name_follower" name="name_follower">Emiliano Frias Felix</p>
-                    </div>
-                    <div class="tarjeta-userRep">
-                        <img src="/app/views/assets/emi3.jpg" alt="">
-                        <p id="name_follower" name="name_follower">Emiliano Frias Felix</p>
-                    </div>
-                    <div class="tarjeta-userRep">
-                        <img src="/app/views/assets/emi3.jpg" alt="">
-                        <p id="name_follower" name="name_follower">Emiliano Frias Felix</p>
-                    </div>
+                    <?php
+                    foreach ($dataSeguidores as $seguidor) {
+                        $usuario = $this->usuarioDao->obtenerUsuarioPorId($seguidor['ID_USUARIO']);
+                    ?>
+                        <div class="tarjeta-userRep">
+                            <img src="data:<?php echo $usuario['TIPO_IMG']; ?>;base64,<?php echo base64_encode($usuario['FOTO_PERFIL']); ?>" alt="Foto de perfil">
+                            <p id="name_follower" name="name_follower"><?php
+                                                                        echo $usuario['USERNAME'];
+                                                                        ?></p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>

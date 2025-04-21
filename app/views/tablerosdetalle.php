@@ -11,8 +11,12 @@ require_once __DIR__ . '/plantillas/header.php';
 
         <div class="main_body_pageTab" style="margin-left: 120px;">
             <div class="tablero"> <!-- Divisor de la página del Tablero-->
-                <h1 class="titulo_tablero">Nombre Tablero</h1>
-                <p style="font-size:2rem; color:white;">Descripcion tablero</p>
+                <h1 class="titulo_tablero"><?php
+                                            echo $tablero['TITULO'];
+                                            ?></h1>
+                <p style="font-size:2rem; color:white;"><?php
+                                                        echo $tablero['DESCRIPCION'];
+                                                        ?></p>
 
             </div>
 
