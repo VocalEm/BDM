@@ -104,4 +104,24 @@ class ModificarController
             $this->middleware->cerrarSesion();
         }
     }
+
+    public function baja($idUsuario)
+    {
+        if ($this->middleware->autenticarUsuario()) {
+            $respuesta = $this->usuarioDao->eliminarUsuario($idUsuario);
+            if ($respuesta['correcto']) {
+                // Redirigir a la página de inicio de sesión o mostrar un mensaje de éxito
+                header("Location: /login/render");
+                $this->middleware->cerrarSesion();
+                exit;
+            } else {
+                // Manejar errores al dar de baja
+                $error = "Ocurrió un error al dar de baja el usuario.";
+                echo $error;
+            }
+        } else {
+            // Si no está autenticado, redirigir a la página de inicio de sesión
+            $this->middleware->cerrarSesion();
+        }
+    }
 }

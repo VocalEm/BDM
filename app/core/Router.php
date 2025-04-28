@@ -34,6 +34,8 @@ class Router
         $this->parametrosConsulta = $this->analizarParametrosConsulta($cadenaConsulta);
         $this->usuarioDao = UsuarioDao::getInstance(); // Instancia de UsuarioDao
         $this->middleware = Middleware::getInstance(); // Instancia de Middleware
+        global $usuarioSesion;
+        $usuarioSesion = $this->obtenerUsuarioEnSesion();
     }
 
     // Método principal para manejar el enrutamiento
@@ -62,8 +64,7 @@ class Router
         $accion = $infoRuta['accion'];
 
         // Establecer el usuario en una variable global
-        global $usuarioSesion;
-        $usuarioSesion = $this->obtenerUsuarioEnSesion();
+
 
         if (method_exists($controlador, $accion)) {
             return call_user_func_array(

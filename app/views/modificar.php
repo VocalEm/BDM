@@ -67,9 +67,9 @@ require_once __DIR__ . '/plantillas/header.php';
                     <input value="Modificar Usuario" name="enviar" type="submit" class="btn_accion" id="btn_guardarCambios" style="font-size: 15px; background-color: #FBBF24;margin-top: 0px;">
                 </div>
                 <div class="btn_label_reg">
-                    <button type="button" class="btn_accion btn_darBaja" id="btn_darBaja">
+                    <a class="btn_accion btn_darBaja" id="btn_darBaja" href="/modificar/baja/<?php echo $usuarioSesion->getIdUsuario(); ?>">
                         Dar de Baja Perfil
-                    </button>
+                    </a>
                 </div>
             </form>
         </div>

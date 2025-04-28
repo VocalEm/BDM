@@ -128,6 +128,7 @@ class UsuarioDao
             $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
 
             $stmt->execute();
+            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
             echo "Error al eliminar usuario: " . $e->getMessage();
         }

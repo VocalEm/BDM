@@ -8,6 +8,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let hasErrors = false;
 
+    // Validar nombre(s)
+    const nombre = document.getElementById("input_name_reg");
+    if (!validarNombreApellido(nombre.value)) {
+      mostrarError(nombre, "El nombre debe tener al menos 3 letras.");
+      hasErrors = true;
+    }
+
+    // Validar apellido paterno
+    const apellidoPaterno = document.getElementById("input_apeP_reg");
+    if (!validarNombreApellido(apellidoPaterno.value)) {
+      mostrarError(
+        apellidoPaterno,
+        "El apellido paterno debe tener al menos 3 letras."
+      );
+      hasErrors = true;
+    }
+
+    // Validar apellido materno
+    const apellidoMaterno = document.getElementById("input_apeM_reg");
+    if (!validarNombreApellido(apellidoMaterno.value)) {
+      mostrarError(
+        apellidoMaterno,
+        "El apellido materno debe tener al menos 3 letras."
+      );
+      hasErrors = true;
+    }
+
     // Validar nombre de usuario
     const username = document.getElementById("input_aka_reg");
     if (!validarUsername(username.value)) {
@@ -63,6 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     error.appendChild(errorText);
     input.parentNode.appendChild(error);
+  }
+
+  // Validar nombre o apellido (mínimo 3 letras)
+  function validarNombreApellido(valor) {
+    const soloLetras = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, "");
+    return soloLetras.length >= 3;
   }
 
   // Validar nombre de usuario

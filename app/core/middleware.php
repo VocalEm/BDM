@@ -41,14 +41,7 @@ class Middleware
         return false;
     }
 
-    function autenticarSesion()
-    {
-        if (isset($_SESSION['id_user'])) {
-            return true; // Usuario autenticado
-        } else {
-            $this->redirigir('/login'); // Redirigir al inicio de sesión
-        }
-    }
+
 
     function cerrarSesion()
     {
@@ -64,12 +57,13 @@ class Middleware
             setcookie('id_user', '', time() - 3600, "/", "", false, true);
         }
     }
+
     function verificarCookie()
     {
         if (isset($_COOKIE['id_user'])) {
             return true; // Cookie válida
         } else {
-            $this->redirigir('/login'); // Redirigir al inicio de sesión
+            return false;
         }
     }
 
@@ -101,11 +95,7 @@ class Middleware
         return false; // Usuario no autenticado
     }
 
-    private function redirigir($ruta)
-    {
-        header("Location: $ruta");
-        exit;
-    }
+
 
     function obtenerIdEnSesion($id)
     {

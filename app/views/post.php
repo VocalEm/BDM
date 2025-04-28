@@ -67,6 +67,7 @@ require_once __DIR__ . '/plantillas/header.php';
                     <form class="post_coment" action="/publicacion/comentar" method="POST" id="form_comentar">
                         <input type="hidden" id="id_publicacion" name="id_publicacion" value="<?php echo $publicacion->getIdPublicacion(); ?>">
                         <input type="text" class="input_comentarPost" id="comentario_usu" name="comentario" placeholder="Comentar">
+                        <div class="error-message" id="error_comentario"></div>
                         <input type="submit" class="btn_accion" id="btn_comentar" value="Comentar">
                     </form>
                 </div>
@@ -92,6 +93,20 @@ require_once __DIR__ . '/plantillas/header.php';
         </div>
     </div>
     <script src="/app/views/js/popup.js"></script>
+    <script>
+        // Validación para evitar comentarios vacíos
+        document.getElementById('form_comentar').addEventListener('submit', function(e) {
+            const comentario = document.getElementById('comentario_usu');
+            const errorDiv = document.getElementById('error_comentario');
+            errorDiv.innerHTML = '';
+            comentario.classList.remove('error');
+            if (!comentario.value.trim()) {
+                errorDiv.innerHTML = '<p style="margin:0;text-align:center;color:red;">Por favor ingresa un comentario.</p>';
+                comentario.classList.add('error');
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 
 </html>
