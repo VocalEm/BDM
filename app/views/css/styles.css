@@ -1193,6 +1193,16 @@ a {
   transform: scale(1.2);
 }
 
+.fa-trash {
+  color: white;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.fa-trash:hover {
+  color: rgb(151, 6, 6);
+  transform: scale(1.2);
+}
+
 .fa-bookmark {
   color: white;
   transition: transform 0.3s ease, color 0.3s ease;
@@ -1341,4 +1351,13 @@ a {
   background-color: var(--color-3);
   color: black;
   width: 100%;
+}
+
+.delete-button {
+  border: none;
+  padding: 0px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }

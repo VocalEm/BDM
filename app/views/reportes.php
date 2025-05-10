@@ -30,12 +30,12 @@ require_once __DIR__ . '/plantillas/header.php';
                     foreach ($dataSeguidores as $seguidor) {
                         $usuario = $this->usuarioDao->obtenerUsuarioPorId($seguidor['ID_USUARIO']);
                     ?>
-                        <div class="tarjeta-userRep">
+                        <a href="/perfil/render/<?php echo $usuario['ID_USUARIO']; ?>" class="tarjeta-userRep">
                             <img src="data:<?php echo $usuario['TIPO_IMG']; ?>;base64,<?php echo base64_encode($usuario['FOTO_PERFIL']); ?>" alt="Foto de perfil">
                             <p id="name_follower" name="name_follower"><?php
                                                                         echo $usuario['USERNAME'];
                                                                         ?></p>
-                        </div>
+                        </a>
                     <?php
                     }
                     ?>

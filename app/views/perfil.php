@@ -26,15 +26,22 @@ require_once __DIR__ . '/plantillas/header.php';
                         <h1 id="Username" name="Username"><?php
                                                             echo $usuario->getUsername();
                                                             ?></h1>
-                        <img src="/app/views/assets/Eye off.png" style="width: 25px; height: 25px; margin: 10px;" alt="Eye Icon">
+                        <?php
+                        if ($usuario->getPrivacidad() == 0)
+                            echo '<img src="/app/views/assets/Eye off.png" style="width: 25px; height: 25px; margin: 10px;" alt="Eye Icon">';
+                        ?>
                     </div>
 
                     <div class="numeros_usu">
                         <p class="numeros" id="publicaciones" name="publicaciones"> <?php
                                                                                     echo strval($usuario->getContadorPublicaciones());
                                                                                     ?> Publicaciones </p>
-                        <p class="numeros" id="followers" name="followers">#Seguidores</p>
-                        <p class="numeros" id="follows" name="follows">#Seguidos</p>
+                        <p class="numeros" id="followers" name="followers"><?php
+                                                                            echo strval($usuario->getContadorSeguidores());
+                                                                            ?> Seguidores</p>
+                        <p class="numeros" id="follows" name="follows"><?php
+                                                                        echo strval($usuario->getContadorSeguidos());
+                                                                        ?> Seguidos</p>
                     </div>
                     <div class="botones_perfil">
 

@@ -130,5 +130,22 @@ class PublicacionController
             $this->middleware->cerrarSesion();
         }
     }
+
+    public function desactivar($id_publicacion)
+    {
+        global $usuarioSesion;
+
+        if ($this->middleware->autenticarUsuario()) {
+            $id_usuario = $usuarioSesion->getIdUsuario();
+            $respuesta = PublicacionDao::GetInstance()->eliminarPublicacion($id_publicacion);
+            if ($respuesta) {
+                header("Location: /perfil/render/" . $id_usuario);
+            } else {
+                echo "Error al eliminar publicacion";
+            }
+        } else {
+            $this->middleware->cerrarSesion();
+        }
+    }
 }
 //quitar el inncesario de usuario en el render

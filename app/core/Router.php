@@ -152,7 +152,8 @@ class Router
                 $consulta['TIPO_IMG']
             );
             $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);
-
+            $usuario->setContadorSeguidores($consulta['SEGUIDORES']);
+            $usuario->setContadorSeguidos($consulta['SEGUIDOS']);
             return $usuario;
         } else {
             $this->middleware->cerrarSesion();

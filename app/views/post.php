@@ -52,6 +52,11 @@ require_once __DIR__ . '/plantillas/header.php';
                         <a id="save-button" <?php if ($isGuardado) echo ('href="' . '/tableros/eliminar/' . $publicacion->getIdPublicacion() . '/' . $usuario->getIdUsuario() . '""'); ?>>
                             <i id="saveIcon" class="fa-regular fa-bookmark fa-2x <?php if ($isGuardado) echo 'guardado' ?>"></i>
                         </a>
+                        <?php
+                        if ($publicacion->getIdUsuario() == $usuarioSesion->getIdUsuario()) { ?>
+                            <a class="delete-button" href="/publicacion/desactivar/<?php echo $publicacion->getIdPublicacion() ?>"><i class="fa-solid fa-trash fa-2x"></i></a>
+                        <?php  } ?>
+
                     </form>
 
 

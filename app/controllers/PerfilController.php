@@ -54,7 +54,9 @@ class PerfilController
                         $consulta['TIPO_IMG']
                     );
 
-                    $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);;
+                    $usuario->setContadorPublicaciones($consulta['PUBLICACIONES']);
+                    $usuario->setContadorSeguidores($consulta['SEGUIDORES']);
+                    $usuario->setContadorSeguidos($consulta['SEGUIDOS']);
                     if ($usuario->getPrivacidad() == 1) {
                         $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
                         if ($dataSeguidos) {
