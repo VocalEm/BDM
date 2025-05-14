@@ -59,23 +59,10 @@ class PerfilController
                     $usuario->setContadorSeguidos($consulta['SEGUIDOS']);
                     if ($usuario->getPrivacidad() == 1) {
                         $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
-                        if ($dataSeguidos) {
-                            $isSeguido = 1; //si lo sigue
-                        } else {
-                            $isSeguido = 0; //no lo sigue
-                        }
+                        $isSeguido = $dataSeguidos['ISSEGUIDO'];
                     } else {
                         $dataSolicitudes = $this->usuarioDao->verificarSolicitud($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
-                        if ($dataSolicitudes) {
-                            $isSolicitud = 1;
-                        } else {
-                            $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
-                            if ($dataSeguidos) {
-                                $isSeguido = 1; //si lo sigue
-                            } else {
-                                $isSolicitud = 0;
-                            }
-                        }
+                        $isSolicitud = $dataSolicitudes['ISSOLICITUD'];
                     }
                 }
                 $publicaciones = PublicacionDao::GetInstance()->obtenerPublicacionUsuario($usuario->getIdUsuario());
