@@ -66,6 +66,7 @@ require_once __DIR__ . '/plantillas/header.php';
                         <?php
                         if (!$usuarioEnSesion) {
                             if ($usuario->getPrivacidad() == 1) {
+
                         ?>
                                 <a class="btn_tablero <?php if ($isSeguido == 1) echo "seguido" ?>" id="btn_seguir"
                                     href="/perfil/seguir/<?php echo ($usuario->getIdUsuario()); ?>/<?php echo $isSeguido; ?>">

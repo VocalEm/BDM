@@ -117,16 +117,33 @@ class TablerosController
                 $tipoImg = ''; // Inicializar con un valor predeterminado
                 $imagen = '';
 
-                // Validar campos obligatorios
+                // Validar campos obligatorios y longitudes
                 if (empty($titulo) || empty($descripcion)) {
                     echo "El título y la descripción son obligatorios.";
                     return;
                 }
+                if (mb_strlen(trim($titulo)) < 4 || mb_strlen(trim($titulo)) > 50) {
+                    echo "El título debe tener entre 4 y 50 caracteres.";
+                    return;
+                }
+                if (mb_strlen(trim($descripcion)) < 4 || mb_strlen(trim($descripcion)) > 100) {
+                    echo "La descripción debe tener entre 4 y 100 caracteres.";
+                    return;
+                }
 
-                // Procesar la carga de imagen
+                // Procesar la carga de imagen (obligatoria)
                 if (!empty($_FILES['imagen']['tmp_name'])) {
                     $tipoImg = $_FILES['imagen']['type'];
                     $imagen = file_get_contents($_FILES['imagen']['tmp_name']);
+                    // Validar tipo de imagen
+                    $validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                    if (!in_array($tipoImg, $validImageTypes)) {
+                        echo "El archivo de imagen no es válido. Solo se permiten JPG, PNG, GIF o WEBP.";
+                        return;
+                    }
+                } else {
+                    echo "Debes subir una imagen para el tablero.";
+                    return;
                 }
 
                 // Crear una nueva instancia de Tableros con los datos del formulario

@@ -241,7 +241,9 @@ class UsuarioDao
             $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
 
             $stmt->execute();
-            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            return $resultado;
         } catch (\PDOException $e) {
             echo "Error al verificar seguir: " . $e->getMessage();
             return false;
@@ -259,7 +261,10 @@ class UsuarioDao
             $stmt->bindParam(':idSeguido', $idSeguido, \PDO::PARAM_INT);
 
             $stmt->execute();
-            return $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            // Si hay resultado, regresa un array con la clave SOLICITUD
+
+            return $resultado;
         } catch (\PDOException $e) {
             echo "Error al verificar solicitud: " . $e->getMessage();
             return false;

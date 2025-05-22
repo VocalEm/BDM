@@ -61,8 +61,12 @@ class PerfilController
                         $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
                         $isSeguido = $dataSeguidos['ISSEGUIDO'];
                     } else {
-                        $dataSolicitudes = $this->usuarioDao->verificarSolicitud($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
-                        $isSolicitud = $dataSolicitudes['ISSOLICITUD'];
+                        $dataSeguidos = $this->usuarioDao->verificarSeguir($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
+                        $isSeguido = $dataSeguidos['ISSEGUIDO'];
+                        if ($isSeguido == 0) {
+                            $dataSolicitudes = $this->usuarioDao->verificarSolicitud($usuarioSesion->getIdUsuario(), $usuario->getIdUsuario());
+                            $isSolicitud = $dataSolicitudes['ISSOLICITUD'];
+                        }
                     }
                 }
                 $publicaciones = PublicacionDao::GetInstance()->obtenerPublicacionUsuario($usuario->getIdUsuario());

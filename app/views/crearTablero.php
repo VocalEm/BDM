@@ -58,16 +58,25 @@ require_once __DIR__ . '/plantillas/header.php';
             const descripcion = document.getElementById('input_descripcion_tablero');
             const imagen = document.getElementById('input_imagen').files[0];
 
+            // Validar título: mínimo 4, máximo 50 caracteres
             if (!titulo.value.trim()) {
                 mostrarError(titulo, 'Por favor ingresa un nombre para el tablero.');
                 hasErrors = true;
-            }
-
-            if (!descripcion.value.trim()) {
-                mostrarError(descripcion, 'Por favor ingresa una descripción.');
+            } else if (titulo.value.trim().length < 4 || titulo.value.trim().length > 50) {
+                mostrarError(titulo, 'El título debe tener entre 4 y 50 caracteres.');
                 hasErrors = true;
             }
 
+            // Validar descripción: mínimo 4, máximo 100 caracteres
+            if (!descripcion.value.trim()) {
+                mostrarError(descripcion, 'Por favor ingresa una descripción.');
+                hasErrors = true;
+            } else if (descripcion.value.trim().length < 4 || descripcion.value.trim().length > 100) {
+                mostrarError(descripcion, 'La descripción debe tener entre 4 y 100 caracteres.');
+                hasErrors = true;
+            }
+
+            // Validar imagen cargada
             if (!imagen) {
                 document.getElementById('errorMessagesTablero').innerHTML = 'Debes subir una imagen para el tablero.';
                 document.getElementById('errorMessagesTablero').style.display = 'block';

@@ -115,11 +115,20 @@ require_once __DIR__ . '/plantillas/header.php';
             if (!titulo.value.trim()) {
                 mostrarError(titulo, 'Por favor ingresa un título.');
                 hasErrors = true;
+            } else if (titulo.value.trim().length < 4) {
+                mostrarError(titulo, 'El título debe tener al menos 4 caracteres.');
+                hasErrors = true;
+            } else if (titulo.value.trim().length > 50) {
+                mostrarError(titulo, 'El título no debe exceder 50 caracteres.');
+                hasErrors = true;
             }
 
             // Validar descripción
             if (!descripcion.value.trim()) {
                 mostrarError(descripcion, 'Por favor ingresa una descripción.');
+                hasErrors = true;
+            } else if (descripcion.value.trim().length > 100) {
+                mostrarError(descripcion, 'La descripción no debe exceder 100 caracteres.');
                 hasErrors = true;
             }
 

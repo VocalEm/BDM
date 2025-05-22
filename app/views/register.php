@@ -10,7 +10,11 @@ require_once __DIR__ . '/plantillas/head.php';
 
         <form id="registerForm" class="contenido_form_reg" action="/register/form" method="POST" enctype="multipart/form-data">
             <p class="main_text_reg">Registro de Usuarios</p>
-            <div id="errorMessages" class="error-messages"></div> <!-- Contenedor para errores -->
+            <div id="errorMessages" class="error-messages">
+                <?php if (isset($error)) {
+                    echo "<p style='color:red;text-align:center;'>$error</p>";
+                } ?>
+            </div>
             <div class="forms_label_reg">
                 <label class="label_reg">Nombre(s):</label>
                 <input type="text" id="input_name_reg" name="nombre" class="inputs_reg" required>
@@ -41,16 +45,7 @@ require_once __DIR__ . '/plantillas/head.php';
                 <div class="error-message" id="error_password"></div> <!-- Error message container -->
                 <label class="label_reg">Cargar Imagen:</label>
                 <input type="file" id="input_fotoPerfil_reg" name="fotoPerfil" class="inputs_reg" accept="image/*" required>
-                <div class="error-message" id="error_fotoPerfil">
-                    <?php
-                    if (isset($error)) {
-                    ?>
-                        <p style="color: red;"> <?php echo $error; ?></p>
-                    <?php
-                        // Mostrar mensaje de error si existe
-                    }
-                    ?>
-                </div> <!-- Error message container -->
+                <div class="error-message" id="error_fotoPerfil"></div> <!-- Error message container -->
             </div>
             <div class="btn_label_reg">
                 <input type="submit" value="Registrarse" class="btn_accion" id="btn_registrarse">

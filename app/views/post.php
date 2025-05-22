@@ -99,7 +99,7 @@ require_once __DIR__ . '/plantillas/header.php';
     </div>
     <script src="/app/views/js/popup.js"></script>
     <script>
-        // Validación para evitar comentarios vacíos
+        // Validación para evitar comentarios vacíos y mayores a 50 caracteres
         document.getElementById('form_comentar').addEventListener('submit', function(e) {
             const comentario = document.getElementById('comentario_usu');
             const errorDiv = document.getElementById('error_comentario');
@@ -107,6 +107,10 @@ require_once __DIR__ . '/plantillas/header.php';
             comentario.classList.remove('error');
             if (!comentario.value.trim()) {
                 errorDiv.innerHTML = '<p style="margin:0;text-align:center;color:red;">Por favor ingresa un comentario.</p>';
+                comentario.classList.add('error');
+                e.preventDefault();
+            } else if (comentario.value.length > 50) {
+                errorDiv.innerHTML = '<p style="margin:0;text-align:center;color:red;">El comentario no puede exceder 50 caracteres.</p>';
                 comentario.classList.add('error');
                 e.preventDefault();
             }
